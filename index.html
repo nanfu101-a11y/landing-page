@@ -3,608 +3,818 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>云枢 CloudHub - 让团队协作快到不像话</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23a855f7'/><circle cx='16' cy='16' r='6' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
-<meta name="description" content="云枢 CloudHub 是一站式团队协作与自动化工作台，拖拽搭建工作流，实时协作，数据看板，10 分钟上线。">
+<title>公子调试 - Windows 深度性能精调</title>
+<meta name="description" content="公子调试,Windows 系统深度性能优化服务。从进程调度到电源策略,从驱动到大小核分配,让每一帧都锋利如初。">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="icon" type="image/jpeg" sizes="32x32" href="favicon.jpg">
+<!--
+  ==========================================================================
+  公子调试 · Windows 深度性能精调 — 单页营销站(占位版)
+  参考版式: wu.wujidj.cn(无极精调站结构) | 视觉主题: 黑银 | 特效: 刀光运镜
+
+  板块对应关系(参考站 -> 本页):
+    Hero(价格速览条)  ->  #top       品牌区+4 速览指标
+    01 问题(痛点4格)   ->  #pain      痛点/影响/表现/原因
+    痛点叙述长文        ->  #story     居中长文案
+    02 优势(4卡)        ->  #edge      4 张能力卡
+    RESULTS 效果(4卡)   ->  #results  4 项数据卡
+    PRICING 三档方案     ->  #pricing  3 档价格卡+提示+注意事项
+    联系/页脚            ->  #contact   底部 CTA + 页脚
+
+  响应式断点: >=1024 桌面满配 / 768-1023 平板(2 列) / <768 移动(1 列+汉堡)
+  特效性能约束: 见文件底部 FX 配置与 <style> 内注释;支持自动降级与手动关闭
+  ==========================================================================
+-->
 <style>
-/* ==================== 主题变量 ==================== */
+/* ==================== 主题变量(黑银) ==================== */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0a0a14;
-  --card-bg:rgba(255,255,255,0.04);
-  --card-border:rgba(255,255,255,0.06);
-  --purple:#a855f7;
-  --purple-dark:#7c3aed;
-  --purple-light:#c084fc;
-  --purple-bg:rgba(168,85,247,0.08);
-  --purple-border:rgba(168,85,247,0.15);
-  --text:#eaeaea;
-  --text-dim:#aaaaaa;
-  --text-muted:#666666;
-  --shadow-sm:0 1px 4px rgba(0,0,0,0.3);
-  --shadow-md:0 4px 16px rgba(0,0,0,0.4);
+  --bg0:#05060a;
+  --bg1:#0c0e13;
+  --panel:rgba(16,18,24,.66);
+  --panel-solid:#101218;
+  --line:rgba(214,220,232,.10);
+  --line-hi:rgba(214,220,232,.24);
+  --silver-hi:#ffffff;
+  --silver:#cdd3de;
+  --silver-dim:#9aa2b0;
+  --muted:#6b7280;
+  --steel:#aeb6c4;
+  --glow:rgba(220,226,240,.55);
+  --grad-title:linear-gradient(180deg,#ffffff 0%,#c7cdd9 55%,#7f8796 100%);
+  --grad-steel:linear-gradient(135deg,#eef1f7 0%,#b6bdcb 45%,#6f7684 100%);
+  --font-mono:"SF Mono","Cascadia Code",Consolas,"Roboto Mono",monospace;
 }
 html{scroll-behavior:smooth}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
-  background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;
-  background-image:
-    radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,0.12) 0%,transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 100%,rgba(168,85,247,0.08) 0%,transparent 55%),
-    radial-gradient(ellipse 50% 40% at 50% 50%,rgba(124,58,237,0.04) 0%,transparent 50%);
-  background-attachment:fixed;
+  background:var(--bg0);color:var(--silver);line-height:1.7;overflow-x:hidden;
 }
+/* 静态背景层: 深空金属底 + 暗角, 全在 canvas 之下 */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 55% at 18% -5%,rgba(148,158,178,.10) 0%,transparent 55%),
+    radial-gradient(ellipse 55% 45% at 100% 30%,rgba(120,130,152,.06) 0%,transparent 60%),
+    radial-gradient(ellipse 90% 70% at 50% 115%,rgba(0,0,0,.85) 0%,transparent 60%),
+    var(--bg0);
+}
+/* 刀光运镜 Canvas: 固定全屏, 在背景上/内容下, 不挡交互 */
+#fx{position:fixed;inset:0;z-index:1;pointer-events:none;width:100%;height:100%}
 a{color:inherit;text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:0 24px}
+img{max-width:100%}
+
+/* 内容层盖在特效上方; 所有文字/按钮都有相对内容背景保证可读 */
+.layer{position:relative;z-index:2}
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
+.kicker{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:3px;
+  color:var(--silver-dim);text-transform:uppercase;margin-bottom:14px;
+}
+.kicker b{color:var(--silver-hi);font-weight:600}
+.num-mark{color:var(--muted);margin-right:10px}
 
 /* ==================== 导航 ==================== */
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 40px;
-  background:rgba(10,10,20,0.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--card-border);
-  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;transition:box-shadow .3s;
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:rgba(6,7,11,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+  transition:border-color .3s,background .3s;
 }
-.nav.scrolled{box-shadow:0 1px 20px rgba(124,58,237,0.08)}
-.nav-logo{display:flex;align-items:center;gap:10px}
-.nav-logo-icon{
-  width:34px;height:34px;border-radius:10px;flex-shrink:0;
-  background:linear-gradient(135deg,var(--purple),var(--purple-dark));
-  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:15px;
-  box-shadow:0 2px 12px rgba(168,85,247,0.35);
+.nav-inner{max-width:1120px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{
+  width:30px;height:30px;border-radius:8px;flex-shrink:0;
+  background:var(--grad-steel);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 14px rgba(205,211,222,.28),inset 0 0 0 1px rgba(255,255,255,.25);
 }
-.nav-logo-text{font-size:15px;font-weight:700}
-.nav-links{display:flex;gap:32px}
-.nav-links a{font-size:13px;color:var(--text-dim);font-weight:500;transition:color .2s;position:relative}
-.nav-links a:hover{color:var(--purple)}
+.brand-mark svg{width:16px;height:16px;stroke:#0a0b0f;fill:none;stroke-width:2.2}
+.brand-mark img{width:100%;height:100%;object-fit:cover;border-radius:8px;display:block}
+.brand-name{font-size:14px;font-weight:700;color:var(--silver-hi);letter-spacing:.5px}
+.brand-name small{color:var(--silver-dim);font-weight:500;margin-left:6px;font-family:var(--font-mono);font-size:11px;letter-spacing:2px}
+.nav-links{display:flex;gap:30px;align-items:center}
+.nav-links a{font-size:13px;color:var(--silver-dim);font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--silver-hi)}
 .nav-cta{
-  padding:8px 20px;border-radius:10px;font-size:13px;font-weight:600;
-  background:var(--purple);color:#fff;transition:all .3s;justify-self:end;
+  padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;color:#0a0b0f;
+  background:var(--grad-steel);box-shadow:0 0 16px rgba(205,211,222,.20);
+  transition:box-shadow .25s,transform .25s;
 }
-.nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(168,85,247,0.35)}
-.nav-toggle{display:none;background:none;border:1px solid var(--card-border);color:var(--text);
-  padding:6px 12px;border-radius:8px;font-size:13px;cursor:pointer;justify-self:end}
+.nav-cta:hover{box-shadow:0 0 26px rgba(225,230,242,.45);transform:translateY(-1px)}
+.nav-toggle{display:none;background:none;border:1px solid var(--line-hi);color:var(--silver);padding:6px 12px;border-radius:8px;font-size:13px;cursor:pointer}
 
 /* ==================== Hero ==================== */
-.hero{
-  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:120px 24px 60px;position:relative;overflow:hidden;
-}
-.hero-glow{
-  position:absolute;width:600px;height:600px;border-radius:50%;
-  background:radial-gradient(circle,rgba(168,85,247,0.15),transparent 70%);
-  top:50%;left:50%;transform:translate(-50%,-50%);animation:glow-pulse 6s ease-in-out infinite;pointer-events:none;
-}
-.hero-glow2{
-  position:absolute;width:400px;height:400px;border-radius:50%;
-  background:radial-gradient(circle,rgba(124,58,237,0.1),transparent 70%);
-  top:30%;left:25%;animation:glow-pulse 8s ease-in-out infinite reverse;pointer-events:none;
-}
-@keyframes glow-pulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
-.hero-content{position:relative;z-index:1}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:130px 0 70px;position:relative}
+.hero-inner{text-align:center}
 .hero-badge{
-  display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:20px;
-  background:var(--purple-bg);border:1px solid var(--purple-border);
-  font-size:12px;color:var(--purple);margin-bottom:28px;font-weight:600;
+  display:inline-flex;align-items:center;gap:10px;padding:7px 18px;border-radius:30px;
+  border:1px solid var(--line-hi);background:rgba(200,208,222,.05);
+  font-size:12px;letter-spacing:2px;color:var(--silver-dim);margin-bottom:34px;
 }
-.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple);animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hero-title{font-size:clamp(38px,7vw,68px);font-weight:900;letter-spacing:-2px;line-height:1.15;margin-bottom:20px}
-.hero-accent{background:linear-gradient(135deg,#fff 20%,var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:16px;color:var(--text-dim);max-width:520px;margin:0 auto 14px;line-height:1.8;font-weight:500}
-.hero-typing{font-size:15px;color:var(--purple-light);height:1.8em;margin-bottom:36px;font-weight:600}
-.typing-cursor{display:inline-block;width:2px;height:1em;background:var(--purple);margin-left:3px;vertical-align:-2px;animation:blink 1s step-end infinite}
-.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.hero-badge i{
+  width:6px;height:6px;border-radius:50%;background:var(--silver);
+  box-shadow:0 0 10px var(--glow);animation:pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.hero-title{
+  font-size:clamp(40px,7.4vw,76px);font-weight:900;line-height:1.08;letter-spacing:-2px;
+  background:var(--grad-title);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:22px;text-shadow:0 0 60px rgba(200,210,230,.08);
+}
+.hero-sub{font-size:clamp(15px,2vw,18px);color:var(--silver-dim);max-width:640px;margin:0 auto;font-weight:400}
+.hero-sub b{color:var(--silver-hi);font-weight:600}
+.hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:40px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:14px 34px;border-radius:10px;
+  font-size:14px;font-weight:600;transition:all .25s;cursor:pointer;
+}
 .btn-primary{
-  padding:14px 36px;border-radius:12px;background:var(--purple);color:#fff;font-size:14px;font-weight:600;
-  box-shadow:0 4px 20px rgba(168,85,247,0.3);transition:all .3s;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;
+  color:#0a0b0f;background:var(--grad-steel);
+  box-shadow:0 0 22px rgba(205,211,222,.22),inset 0 0 0 1px rgba(255,255,255,.28);
 }
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(168,85,247,0.4)}
+.btn-primary:hover{box-shadow:0 0 38px rgba(228,233,244,.5),inset 0 0 0 1px rgba(255,255,255,.4);transform:translateY(-2px)}
 .btn-ghost{
-  padding:14px 28px;border-radius:12px;border:1px solid var(--card-border);background:rgba(255,255,255,0.04);
-  color:var(--text);font-size:14px;font-weight:600;transition:all .3s;display:inline-flex;align-items:center;gap:8px;
+  color:var(--silver);border:1px solid var(--line-hi);background:rgba(200,208,222,.04);
 }
-.btn-ghost:hover{border-color:var(--purple-border);background:var(--purple-bg);color:var(--purple)}
-.hero-note{margin-top:18px;font-size:12px;color:var(--text-muted)}
-
-/* ==================== 数据条 ==================== */
-.stats{padding:0 24px 20px}
-.stats-inner{
-  display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;
-  padding:28px 48px;border-radius:16px;background:var(--card-bg);border:1px solid var(--card-border);max-width:800px;margin:0 auto;
+.btn-ghost:hover{border-color:var(--silver);background:rgba(210,218,232,.08);color:var(--silver-hi)}
+/* Hero 速览条(对应参考站 ¥38/30-50%/24h/1对1) */
+.hero-stats{
+  display:flex;align-items:stretch;justify-content:center;flex-wrap:wrap;gap:0;
+  margin:64px auto 0;max-width:880px;border:1px solid var(--line);
+  background:var(--panel);backdrop-filter:blur(10px);border-radius:16px;overflow:hidden;
 }
-.stat-item{text-align:center}
-.stat-num{font-size:26px;font-weight:900;color:var(--purple);margin-bottom:2px}
-.stat-label{font-size:12px;color:var(--text-muted);white-space:nowrap}
-.stat-divider{width:1px;height:36px;background:var(--card-border)}
+.hstat{flex:1;min-width:150px;padding:24px 16px;text-align:center;position:relative}
+.hstat + .hstat::before{content:'';position:absolute;left:0;top:20%;height:60%;width:1px;background:var(--line)}
+.hstat b{display:block;font-size:clamp(22px,3vw,30px);font-weight:900;color:var(--silver-hi);letter-spacing:-.5px}
+.hstat span{font-size:12px;color:var(--muted);display:block;margin-top:4px;letter-spacing:1px}
+.hstat b em{font-style:normal;font-size:.62em;color:var(--silver-dim);font-weight:600;margin-right:2px}
 
 /* ==================== 通用区块 ==================== */
-section{padding:80px 0}
-.section-header{text-align:center;margin-bottom:56px;padding:0 24px}
-.section-header h2{font-size:28px;font-weight:800;margin-bottom:12px}
-.section-header p{color:var(--text-dim);font-size:14px}
+section{padding:96px 0}
+.shead{text-align:center;max-width:720px;margin:0 auto 60px}
+.shead h2{font-size:clamp(26px,4vw,40px);font-weight:900;color:var(--silver-hi);letter-spacing:-1px;line-height:1.2}
+.shead .kicker{margin-bottom:16px}
+.shead p{color:var(--silver-dim);font-size:14px;margin-top:12px}
 
-/* ==================== Bento 网格 ==================== */
-.bento-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.bento-card{
-  border-radius:20px;background:var(--card-bg);border:1px solid var(--card-border);
-  transition:all .3s;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;overflow:hidden;
+/* ==================== 01 问题四格 ==================== */
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{
+  border:1px solid var(--line);border-radius:14px;background:var(--panel);
+  backdrop-filter:blur(8px);padding:26px 22px;transition:border-color .3s,transform .3s;
+  position:relative;overflow:hidden;
 }
-.bento-card:hover{border-color:var(--purple-border);transform:translateY(-4px);box-shadow:0 8px 32px rgba(168,85,247,0.12)}
-.bento-wide{grid-column:span 2;flex-direction:row}
-.bento-wide .bento-body{flex:1;padding:32px 28px;display:flex;flex-direction:column}
-.bento-wide .bento-visual{
-  width:45%;min-height:210px;background:rgba(255,255,255,0.02);
-  display:flex;align-items:center;justify-content:center;border-left:1px solid var(--card-border);padding:20px;
+.card::after{ /* 顶边银线(扫过光效的静态锚点) */
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(214,220,232,.5),transparent);
+  opacity:0;transition:opacity .4s;
 }
-.bento-card:not(.bento-wide){padding:28px 24px}
-.bento-visual-sm{margin:16px -24px -28px;background:rgba(255,255,255,0.02);border-top:1px solid var(--card-border);height:130px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:14px}
-.bento-icon{
-  width:44px;height:44px;border-radius:12px;background:var(--purple-bg);
-  display:flex;align-items:center;justify-content:center;margin-bottom:14px;flex-shrink:0;
+.card:hover{border-color:var(--line-hi);transform:translateY(-4px)}
+.card:hover::after{opacity:1}
+.card .tag{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--muted);display:block;margin-bottom:12px}
+.card h3{font-size:17px;font-weight:700;color:var(--silver-hi);margin-bottom:8px}
+.card p{font-size:13px;color:var(--silver-dim);line-height:1.8}
+.card .big{font-size:13px;color:var(--silver);font-weight:600}
+.card .icon{
+  width:40px;height:40px;border-radius:10px;margin-bottom:16px;
+  border:1px solid var(--line-hi);background:linear-gradient(135deg,rgba(210,218,232,.10),rgba(210,218,232,.02));
+  display:flex;align-items:center;justify-content:center;
 }
-.bento-icon svg{width:22px;height:22px;color:var(--purple)}
-.bento-tag{
-  display:inline-block;font-size:11px;font-weight:700;color:var(--purple);
-  text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;width:fit-content;
-}
-.bento-card h3{font-size:16px;font-weight:800;margin-bottom:6px;line-height:1.4}
-.bento-card p{font-size:13px;color:var(--text-dim);line-height:1.7}
-.bento-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.bento-tags span{
-  padding:5px 14px;border-radius:8px;background:rgba(255,255,255,0.04);
-  border:1px solid var(--card-border);font-size:11px;font-weight:700;
-}
-.bento-wide .bento-body .bento-tags{margin-top:auto;padding-top:14px}
+.card .icon svg{width:19px;height:19px;stroke:var(--steel);fill:none;stroke-width:1.6}
+.neg b{color:#e6e9f0}
 
-/* ==================== 优势三栏 ==================== */
-.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.why-card{
-  padding:28px 24px;border-radius:16px;background:var(--card-bg);
-  border:1px solid var(--card-border);transition:all .3s;box-shadow:var(--shadow-sm);
-}
-.why-card:hover{border-color:var(--purple-border);transform:translateY(-3px);box-shadow:var(--shadow-md)}
-.why-icon{
-  width:44px;height:44px;border-radius:12px;background:var(--purple-bg);
-  display:flex;align-items:center;justify-content:center;margin-bottom:14px;
-}
-.why-icon svg{width:22px;height:22px;color:var(--purple)}
-.why-card h3{font-size:15px;font-weight:700;margin-bottom:6px}
-.why-card p{font-size:13px;color:var(--text-dim);line-height:1.7}
+/* ==================== 02 叙述段 ==================== */
+.story{max-width:760px;margin:0 auto;padding:0 24px;text-align:left}
+.story p{color:var(--silver-dim);font-size:15px;line-height:2.1;margin-bottom:20px}
+.story p.hl{color:var(--silver);font-size:16px;line-height:2;border-left:2px solid var(--silver);padding-left:18px}
+.story p b{color:var(--silver-hi)}
+.story p.glow{color:var(--silver-hi);font-size:19px;font-weight:700;text-align:center;margin:34px 0;letter-spacing:.5px}
 
-/* ==================== 价格 ==================== */
-.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+/* ==================== 03 优势 / 04 效果 两套4卡共用 grid4 */
+.grid4 .card h3{font-size:16px}
+.big-num{
+  font-size:clamp(30px,4.4vw,44px);font-weight:900;letter-spacing:-1.5px;
+  background:var(--grad-title);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;
+}
+.up{color:#c9ced8} /* 黑银下用银白表现提升,不引入彩色 */
+.effect-ul{list-style:none;margin-top:12px}
+.effect-ul li{font-size:12px;color:var(--muted);padding:3px 0 3px 16px;position:relative}
+.effect-ul li::before{content:'';position:absolute;left:0;top:10px;width:7px;height:7px;border-top:1px solid var(--silver);border-right:1px solid var(--silver);transform:rotate(45deg)}
+
+/* ==================== 05 价格 ==================== */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
 .price-card{
-  padding:32px 26px;border-radius:16px;background:var(--card-bg);
-  border:1px solid var(--card-border);transition:all .3s;box-shadow:var(--shadow-sm);position:relative;
+  display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;
+  background:var(--panel);backdrop-filter:blur(10px);padding:32px 28px;position:relative;
+  transition:border-color .3s,transform .3s;
 }
-.price-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
-.price-card.featured{border-color:var(--purple-border);background:rgba(168,85,247,0.06)}
-.price-flag{
+.price-card:hover{transform:translateY(-4px);border-color:var(--line-hi)}
+.price-card.featured{
+  border-color:var(--line-hi);
+  background:linear-gradient(180deg,rgba(214,220,232,.10),rgba(214,220,232,.02) 45%),var(--panel);
+  box-shadow:0 0 0 1px rgba(214,220,232,.16),0 18px 50px rgba(0,0,0,.5);
+}
+.flag{
   position:absolute;top:-11px;left:50%;transform:translateX(-50%);
-  padding:3px 14px;border-radius:20px;background:var(--purple);color:#fff;font-size:11px;font-weight:700;white-space:nowrap;
+  padding:3px 14px;border-radius:20px;background:var(--grad-steel);color:#0a0b0f;
+  font-size:11px;font-weight:700;white-space:nowrap;letter-spacing:1px;
+  box-shadow:0 0 16px rgba(210,218,232,.35);
 }
-.price-name{font-size:15px;font-weight:700;margin-bottom:6px}
-.price-desc{font-size:12px;color:var(--text-muted);margin-bottom:18px;min-height:2.6em}
-.price-num{font-size:34px;font-weight:900;color:var(--text);line-height:1.2}
-.price-num small{font-size:14px;font-weight:600;color:var(--text-muted)}
-.price-unit{font-size:12px;color:var(--text-muted);margin-bottom:20px}
-.price-list{list-style:none;margin-bottom:24px}
-.price-list li{font-size:13px;color:var(--text-dim);padding:7px 0 7px 22px;position:relative;line-height:1.6}
-.price-list li::before{
-  content:'';position:absolute;left:0;top:14px;width:12px;height:7px;
-  border-left:2px solid var(--purple);border-bottom:2px solid var(--purple);transform:rotate(-45deg);
+.p-name{font-size:15px;font-weight:700;color:var(--silver-hi);margin-bottom:4px}
+.p-sub{font-size:12px;color:var(--muted);margin-bottom:18px}
+.p-price{font-size:40px;font-weight:900;color:var(--silver-hi);letter-spacing:-2px;line-height:1}
+.p-price small{font-size:14px;font-weight:600;color:var(--silver-dim);letter-spacing:0}
+.p-time{font-size:12px;color:var(--muted);margin:10px 0 18px;font-family:var(--font-mono)}
+.p-desc{font-size:13px;color:var(--silver-dim);border-top:1px solid var(--line);padding-top:16px;margin-bottom:14px;line-height:1.8}
+.p-list{list-style:none;flex:1;margin-bottom:22px}
+.p-list li{font-size:13px;color:var(--silver-dim);padding:6px 0 6px 20px;position:relative;line-height:1.65}
+.p-list li::before{
+  content:'';position:absolute;left:2px;top:13px;width:9px;height:5px;
+  border-left:1.6px solid var(--silver);border-bottom:1.6px solid var(--silver);transform:rotate(-45deg);
 }
-.price-card .btn-primary,.price-card .btn-ghost{width:100%;justify-content:center}
-
-/* ==================== FAQ ==================== */
-.faq{max-width:760px;margin:0 auto;padding:0 24px}
-.faq-item{
-  border-radius:14px;background:var(--card-bg);border:1px solid var(--card-border);
-  margin-bottom:12px;overflow:hidden;transition:border-color .3s;
+.p-list li.hi{color:var(--silver)}
+.p-list li.hi::before{border-color:var(--silver-hi)}
+.p-note-line{font-size:12px;color:var(--muted);margin:10px 0 0;border-top:1px dashed var(--line);padding-top:12px;line-height:1.7}
+.price-card .btn{justify-content:center;width:100%}
+.price-card .btn-primary{font-size:14px}
+.note-panel{
+  margin-top:40px;border:1px solid var(--line);border-left:2px solid var(--silver);
+  background:rgba(10,11,15,.6);border-radius:10px;padding:18px 22px;
+  font-size:12px;color:var(--silver-dim);line-height:2;
 }
-.faq-item:hover{border-color:var(--purple-border)}
-.faq-q{
-  padding:18px 22px;font-size:14px;font-weight:600;cursor:pointer;
-  display:flex;justify-content:space-between;align-items:center;gap:16px;user-select:none;
-}
-.faq-q::after{
-  content:'';width:8px;height:8px;border-right:2px solid var(--purple);border-bottom:2px solid var(--purple);
-  transform:rotate(45deg);transition:transform .3s;flex-shrink:0;margin-bottom:3px;
-}
-.faq-item.open .faq-q::after{transform:rotate(-135deg)}
-.faq-a{padding:0 22px;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;font-size:13px;color:var(--text-dim);line-height:1.8}
-.faq-item.open .faq-a{padding:0 22px 20px;max-height:260px}
+.note-panel b{color:var(--silver)}
+.note-panel span{display:block}
 
 /* ==================== 底部 CTA ==================== */
-.cta{padding:80px 24px;text-align:center}
-.cta-inner{
-  max-width:700px;margin:0 auto;padding:56px 32px;border-radius:24px;
-  background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(124,58,237,0.04));
-  border:1px solid var(--purple-border);
+#contact{padding:110px 0 60px}
+.cta-box{
+  text-align:center;max-width:760px;margin:0 auto;padding:64px 40px;border-radius:24px;
+  border:1px solid var(--line-hi);background:var(--panel);
+  backdrop-filter:blur(12px);position:relative;overflow:hidden;
 }
-.cta h2{font-size:26px;font-weight:800;margin-bottom:12px}
-.cta p{color:var(--text-dim);font-size:14px;margin-bottom:28px}
+.cta-box::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(214,220,232,.10),transparent 70%);
+}
+.cta-box h2{font-size:clamp(24px,4vw,38px);font-weight:900;color:var(--silver-hi);letter-spacing:-1px;margin-bottom:14px}
+.cta-box p{color:var(--silver-dim);font-size:14px;margin-bottom:34px}
+.contact-chips{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px;position:relative}
+.chip{
+  border:1px solid var(--line-hi);border-radius:10px;padding:13px 24px;font-size:14px;
+  background:rgba(210,218,232,.05);color:var(--silver);transition:all .25s;font-weight:500;
+}
+.chip:hover{border-color:var(--silver);color:var(--silver-hi);transform:translateY(-2px)}
 
 /* ==================== 页脚 ==================== */
-.footer{padding:48px 24px;text-align:center;border-top:1px solid var(--card-border);background:rgba(255,255,255,0.02)}
-.footer-brand{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px}
-.footer-brand span{font-weight:700;font-size:14px}
-.footer-links{font-size:13px;color:var(--text-dim);margin-bottom:12px}
-.footer-links a{color:var(--purple);margin:0 8px}
-.footer-copy{font-size:12px;color:var(--text-muted)}
+.footer{padding:46px 24px;text-align:center;border-top:1px solid var(--line);margin-top:40px}
+.footer .brand{justify-content:center;margin-bottom:12px}
+.footer-copy{font-size:12px;color:var(--muted)}
+.footer-copy a{color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.footer-copy a:hover{color:var(--silver-dim)}
 
-/* ==================== 滚动动画 ==================== */
-.fade-up{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
-.fade-up.visible{opacity:1;transform:none}
+/* ==================== 滚动淡入 ==================== */
+.fade{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+.fade.in{opacity:1;transform:none}
+.fade.d1{transition-delay:.08s}.fade.d2{transition-delay:.16s}.fade.d3{transition-delay:.24s}.fade.d4{transition-delay:.32s}
+/* 无 JS 兜底: 未启用 JS 时所有内容直接可见 */
+html:not(.js) .fade{opacity:1;transform:none}
 
 /* ==================== 响应式 ==================== */
-@media (max-width:900px){
-  .bento-grid{grid-template-columns:repeat(2,1fr)}
-  .bento-wide{grid-column:span 2}
-  .why-grid,.price-grid{grid-template-columns:1fr}
-  .stats-inner{gap:24px;padding:24px}
-  .stat-divider{display:none}
+@media (max-width:1023px){
+  .grid4{grid-template-columns:repeat(2,1fr)}
+  .price-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}
+  section{padding:76px 0}
 }
-@media (max-width:768px){
-  .nav{padding:12px 20px;grid-template-columns:1fr auto}
+@media (max-width:767px){
+  .nav-inner{height:58px}
   .nav-links{
     display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;
-    background:rgba(10,10,20,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--card-border);padding:8px 0;
+    background:rgba(6,7,11,.97);backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--line);padding:6px 0;
   }
   .nav-links.show{display:flex}
-  .nav-links a{padding:12px 24px;font-size:14px}
+  .nav-links a{padding:14px 24px;font-size:14px;width:100%}
   .nav-cta{display:none}
   .nav-toggle{display:block}
-  .bento-grid{grid-template-columns:1fr}
-  .bento-wide{grid-column:span 1;flex-direction:column}
-  .bento-wide .bento-visual{width:100%;border-left:none;border-top:1px solid var(--card-border);min-height:170px}
-  section{padding:56px 0}
-  .hero{padding:110px 20px 50px}
+  .grid4{grid-template-columns:1fr}
+  .hero{min-height:auto;padding:110px 0 54px}
+  .hero-stats{margin-top:44px}
+  .hstat{min-width:45%;border:0}
+  .hstat::before{content:none}
+  .hstat:nth-child(2)::before,.hstat:nth-child(4)::before{
+    content:'';position:absolute;left:0;top:20%;height:60%;width:1px;background:var(--line);
+  }
+  .cta-box{padding:48px 24px}
+}
+
+/* ==================== 无障碍: 用户偏好减少动效 ==================== */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none!important;transition:none!important}
 }
 </style>
 </head>
 <body>
 
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<div class="layer">
+
 <!-- ==================== 导航 ==================== -->
-<nav class="nav" id="nav">
-  <a href="#" class="nav-logo">
-    <div class="nav-logo-icon">云</div>
-    <span class="nav-logo-text">云枢 CloudHub</span>
-  </a>
-  <div class="nav-links" id="navLinks">
-    <a href="#features">产品功能</a>
-    <a href="#why">核心优势</a>
-    <a href="#pricing">价格方案</a>
-    <a href="#faq">常见问题</a>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark"><img src="logo.jpg" alt="公子调试"></span>
+      <span class="brand-name">公子调试<small>TUNE</small></span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#pain">01 问题</a>
+      <a href="#edge">02 优势</a>
+      <a href="#results">效果</a>
+      <a href="#pricing">方案</a>
+      <a href="#contact">联系</a>
+    </div>
+    <a href="#contact" class="nav-cta">立即联系</a>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">菜单</button>
   </div>
-  <a href="apply.html" class="nav-cta">免费试用</a>
-  <button class="nav-toggle" id="navToggle">菜单</button>
 </nav>
 
-<!-- ==================== Hero ==================== -->
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
-  <div class="hero-content">
-    <div class="hero-badge">3.0 版本已发布 · 全新自动化引擎</div>
-    <h1 class="hero-title">
-      让团队协作<br><span class="hero-accent">快到不像话</span>
-    </h1>
-    <p class="hero-sub">一个平台搞定流程自动化、实时协作与数据看板。不用写代码，10 分钟上线，团队当天就能用起来。</p>
-    <div class="hero-typing"><span id="typed"></span><span class="typing-cursor"></span></div>
-    <div class="hero-btns">
-      <a href="apply.html" class="btn-primary">免费开始使用</a>
-      <a href="#features" class="btn-ghost">看看它能做什么</a>
+<!-- ==================== Hero(速览) ==================== -->
+<header class="hero" id="top">
+  <div class="hero-inner container">
+    <div class="hero-badge fade in"><i></i>每帧,都值得被认真对待</div>
+    <h1 class="hero-title fade in d1">你的电脑<br>只差一次精调</h1>
+    <p class="hero-sub fade in d2">一台没有深度调校的 Windows,可能正在浪费 <b>30%~50%</b> 的硬件性能。
+    不是一键清理,不是换镜像——是把整台机器从系统底层到应用层,<b>全部重新调一遍</b>。</p>
+    <div class="hero-cta fade in d3">
+      <a href="#pricing" class="btn btn-primary">选择精调方案</a>
+      <a href="#contact" class="btn btn-ghost">直接联系公子调试</a>
     </div>
-    <p class="hero-note">无需信用卡 · 5 人以内永久免费</p>
+    <div class="hero-stats fade in d4">
+      <div class="hstat"><b><em>¥</em>38</b><span>起步价 · 精优化</span></div>
+      <div class="hstat"><b>30-50%</b><span>性能回收幅度</span></div>
+      <div class="hstat"><b>24h</b><span>无提升可退</span></div>
+      <div class="hstat"><b>1对1</b><span>专属服务</span></div>
+    </div>
   </div>
-</section>
+</header>
 
-<!-- ==================== 数据条 ==================== -->
-<div class="stats">
-  <div class="stats-inner fade-up">
-    <div class="stat-item"><div class="stat-num">12,000+</div><div class="stat-label">团队正在使用</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat-item"><div class="stat-num">99.98%</div><div class="stat-label">服务可用性</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat-item"><div class="stat-num">60+</div><div class="stat-label">系统集成</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat-item"><div class="stat-num">4.9</div><div class="stat-label">用户评分</div></div>
-  </div>
-</div>
-
-<!-- ==================== 功能 Bento ==================== -->
-<section id="features">
-  <div class="section-header fade-up">
-    <h2>核心功能一览</h2>
-    <p>从流程自动化到数据洞察，覆盖团队协作的完整链路</p>
-  </div>
+<!-- ==================== 01 问题 ==================== -->
+<section id="pain">
   <div class="container">
-    <div class="bento-grid fade-up">
-
-      <!-- 大卡：自动化工作流 -->
-      <div class="bento-card bento-wide">
-        <div class="bento-body">
-          <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-          <div class="bento-tag">Automation</div>
-          <h3>自动化工作流</h3>
-          <p>拖拽搭建审批、通知与数据流转，不用写一行代码。支持条件分支、定时触发、异常重试与人工介入，流程一旦跑通就 7×24 小时自动执行，把重复劳动交给系统。</p>
-          <div class="bento-tags"><span>审批流</span><span>定时触发</span><span>异常重试</span></div>
-        </div>
-        <div class="bento-visual">
-          <svg viewBox="0 0 240 150" fill="none" style="width:100%;height:auto">
-            <rect x="10" y="20" width="70" height="34" rx="8" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.4)"/>
-            <text x="45" y="42" fill="#c084fc" font-size="11" text-anchor="middle" font-family="sans-serif">表单提交</text>
-            <rect x="90" y="58" width="70" height="34" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)"/>
-            <text x="125" y="80" fill="#aaaaaa" font-size="11" text-anchor="middle" font-family="sans-serif">条件判断</text>
-            <rect x="170" y="96" width="62" height="34" rx="8" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.4)"/>
-            <text x="201" y="118" fill="#c084fc" font-size="11" text-anchor="middle" font-family="sans-serif">自动归档</text>
-            <path d="M80 37 L90 37 L90 75" stroke="rgba(168,85,247,0.5)" stroke-width="1.5" fill="none"/>
-            <path d="M160 75 L201 75 L201 96" stroke="rgba(168,85,247,0.5)" stroke-width="1.5" fill="none"/>
-            <path d="M80 37 L201 37 L201 96" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" fill="none" stroke-dasharray="4 4"/>
-          </svg>
-        </div>
+    <div class="shead fade">
+      <div class="kicker">01 <span class="num-mark">—</span> 问题 <b>PAIN</b></div>
+      <h2>帧数忽高忽低,手感像隔了层纱</h2>
+      <p>显卡给力,处理器也不弱,可一上手就是不对劲——换外设、换屏幕,那股别扭始终没消失。</p>
+    </div>
+    <div class="grid4">
+      <div class="card fade neg d1">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.2 2.2M16.2 16.2l2.2 2.2M18.4 5.6l-2.2 2.2M7.8 16.2l-2.2 2.2"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <span class="tag">PAIN POINT</span>
+        <h3>闪退 / 掉帧 / Low 帧</h3>
+        <p>团战掉帧、加载闪退、1% Low 帧拉胯,配置单上的性能完全没兑现。</p>
       </div>
-
-      <!-- 实时协作 -->
-      <div class="bento-card">
-        <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <div class="bento-tag">Real-time</div>
-        <h3>实时协作空间</h3>
-        <p>多人同时编辑，光标级同步不冲突。评论即任务，@ 一下就指派，讨论不再散落在各个群里。</p>
-        <div class="bento-visual-sm">
-          <svg viewBox="0 0 220 70" fill="none" style="width:100%;height:auto">
-            <rect x="6" y="10" width="208" height="14" rx="7" fill="rgba(255,255,255,0.05)"/>
-            <rect x="6" y="10" width="120" height="14" rx="7" fill="rgba(168,85,247,0.22)"/>
-            <rect x="6" y="34" width="208" height="14" rx="7" fill="rgba(255,255,255,0.05)"/>
-            <rect x="6" y="34" width="70" height="14" rx="7" fill="rgba(192,132,252,0.22)"/>
-            <rect x="6" y="58" width="160" height="10" rx="5" fill="rgba(255,255,255,0.05)"/>
-            <circle cx="128" cy="17" r="4" fill="#a855f7"/>
-            <circle cx="80" cy="41" r="4" fill="#c084fc"/>
-          </svg>
-        </div>
+      <div class="card fade d2">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 17l5-6 4 4 6-8"/><path d="M15 7h6v6"/></svg></div>
+        <span class="tag">IMPACT</span>
+        <h3>30%~50% 性能损失</h3>
+        <p>后台全家桶、系统预加载、错误电源计划,正在后台悄悄偷走你的帧率。</p>
       </div>
-
-      <!-- 数据看板 -->
-      <div class="bento-card">
-        <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-        <div class="bento-tag">Insights</div>
-        <h3>数据洞察看板</h3>
-        <p>20+ 图表组件，拖一拖就生成经营看板。支持多维筛选、导出报表与定时推送到群。</p>
-        <div class="bento-visual-sm">
-          <svg viewBox="0 0 220 70" fill="none" style="width:100%;height:auto">
-            <rect x="20" y="44" width="22" height="20" rx="3" fill="rgba(168,85,247,0.35)"/>
-            <rect x="52" y="30" width="22" height="34" rx="3" fill="rgba(168,85,247,0.5)"/>
-            <rect x="84" y="38" width="22" height="26" rx="3" fill="rgba(168,85,247,0.35)"/>
-            <rect x="116" y="16" width="22" height="48" rx="3" fill="rgba(192,132,252,0.6)"/>
-            <rect x="148" y="26" width="22" height="38" rx="3" fill="rgba(168,85,247,0.45)"/>
-            <rect x="180" y="36" width="22" height="28" rx="3" fill="rgba(168,85,247,0.3)"/>
-            <line x1="14" y1="64" x2="206" y2="64" stroke="rgba(255,255,255,0.1)"/>
-          </svg>
-        </div>
+      <div class="card fade d3">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h10"/><circle cx="19" cy="19" r="2.4"/></svg></div>
+        <span class="tag">SYMPTOM</span>
+        <h3>瞄准粘滞 · 画面拖影</h3>
+        <p>鼠标点击到屏幕显示,整条链路延迟超标,反应永远慢半拍。</p>
       </div>
-
-      <!-- 权限安全 -->
-      <div class="bento-card">
-        <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-        <div class="bento-tag">Security</div>
-        <h3>权限与安全</h3>
-        <p>字段级权限管控、完整操作审计日志、SSO 单点登录与传输加密，数据合规可追溯。</p>
-        <div class="bento-visual-sm">
-          <svg viewBox="0 0 220 70" fill="none" style="width:100%;height:auto">
-            <rect x="70" y="14" width="80" height="46" rx="8" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.35)"/>
-            <path d="M92 32v-5a8 8 0 0 1 16 0v5" stroke="rgba(168,85,247,0.7)" stroke-width="1.5"/>
-            <circle cx="100" cy="38" r="3" fill="#a855f7"/>
-            <line x1="100" y1="41" x2="100" y2="48" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
-            <text x="112" y="42" fill="#666666" font-size="11" font-family="sans-serif">已加密</text>
-          </svg>
-        </div>
+      <div class="card fade d4">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v4.5L5.2 19a2 2 0 0 0 1.9 2.6h9.8a2 2 0 0 0 1.9-2.6L14 7.5V3"/><path d="M8.5 15h7"/></svg></div>
+        <span class="tag">ROOT CAUSE</span>
+        <h3>系统从未被认真调过</h3>
+        <p>大小核没安排、电源丢在平衡档、驱动参数全默认——问题不在硬件,在系统。</p>
       </div>
-
-      <!-- 开放集成 -->
-      <div class="bento-card">
-        <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><circle cx="19" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><path d="M16.5 6.5L13.5 10.5M7.5 16.5L10.5 13.5"/></svg></div>
-        <div class="bento-tag">Integration</div>
-        <h3>开放 API 与集成</h3>
-        <p>60+ 官方连接器，REST API 与 Webhook 全开放，5 分钟对接你现有的 ERP、CRM 与 IM 工具。</p>
-        <div class="bento-visual-sm">
-          <svg viewBox="0 0 220 70" fill="none" style="width:100%;height:auto">
-            <circle cx="110" cy="35" r="14" fill="rgba(168,85,247,0.18)" stroke="rgba(168,85,247,0.5)"/>
-            <text x="110" y="40" fill="#c084fc" font-size="11" text-anchor="middle" font-family="sans-serif">API</text>
-            <circle cx="40" cy="18" r="9" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)"/>
-            <circle cx="40" cy="52" r="9" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)"/>
-            <circle cx="180" cy="18" r="9" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)"/>
-            <circle cx="180" cy="52" r="9" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)"/>
-            <path d="M49 22 L97 31M49 48 L97 39M171 22 L123 31M171 48 L123 39" stroke="rgba(168,85,247,0.35)" stroke-width="1.2"/>
-          </svg>
-        </div>
-      </div>
-
-      <!-- 移动与离线 -->
-      <div class="bento-card">
-        <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></div>
-        <div class="bento-tag">Anywhere</div>
-        <h3>多端同步与离线</h3>
-        <p>iOS、Android、Windows、mac 全平台覆盖，弱网离线可用，联网自动同步不丢数据。</p>
-      </div>
-
-      <!-- 大卡：知识库 -->
-      <div class="bento-card bento-wide">
-        <div class="bento-body">
-          <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-          <div class="bento-tag">Knowledge</div>
-          <h3>全局知识库与智能检索</h3>
-          <p>文档、表格、流程记录与历史对话统一索引，一句话就能找到答案。新人入职不用再挨个问人，团队经验沉淀下来而不是散在聊天记录里。</p>
-          <div class="bento-tags"><span>全文检索</span><span>权限继承</span><span>版本回溯</span></div>
-        </div>
-        <div class="bento-visual">
-          <svg viewBox="0 0 240 150" fill="none" style="width:100%;height:auto">
-            <rect x="24" y="24" width="192" height="32" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(168,85,247,0.35)"/>
-            <circle cx="44" cy="40" r="6" fill="none" stroke="rgba(192,132,252,0.7)" stroke-width="1.5"/>
-            <line x1="49" y1="45" x2="53" y2="49" stroke="rgba(192,132,252,0.7)" stroke-width="1.5"/>
-            <rect x="60" y="35" width="90" height="9" rx="4" fill="rgba(255,255,255,0.12)"/>
-            <rect x="24" y="70" width="192" height="22" rx="6" fill="rgba(168,85,247,0.1)"/>
-            <rect x="34" y="78" width="60" height="6" rx="3" fill="rgba(192,132,252,0.45)"/>
-            <rect x="34" y="98" width="192" height="22" rx="6" fill="rgba(255,255,255,0.04)"/>
-            <rect x="44" y="106" width="80" height="6" rx="3" fill="rgba(255,255,255,0.1)"/>
-            <rect x="34" y="126" width="192" height="22" rx="6" fill="rgba(255,255,255,0.04)"/>
-            <rect x="44" y="134" width="52" height="6" rx="3" fill="rgba(255,255,255,0.1)"/>
-          </svg>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- ==================== 核心优势 ==================== -->
-<section id="why">
-  <div class="section-header fade-up">
-    <h2>为什么团队愿意换过来</h2>
-    <p>不是功能最多的那个，但是最容易用起来的那个</p>
+<!-- ==================== 02 痛点叙述 ==================== -->
+<section id="story" style="padding-top:0">
+  <div class="story fade">
+    <p class="hl">你配了一台电脑,显卡给力,处理器也不弱,按参数看,玩游戏应该轻轻松松。
+    可实际一上手,帧数忽高忽低,延迟飘忽不定,鼠标拖拽起来像隔了层纱。</p>
+    <p>你怀疑是外设拖后腿,换过鼠标、换过屏幕,可那股不对劲的感觉始终没消失。</p>
+    <p><b>其实问题不在硬件。系统压根没被认真调过。</b></p>
+    <p>一台 Windows,调和不调,跑起来可能差出三分之一甚至更多的体验。各种全家桶软件蹲在后台偷跑,
+    系统自带的搜索、预加载功能也在暗中抢资源;处理器的大小核没被正确安排,电源模式丢在“平衡”档,
+    该冲的时候 CPU 根本冲不起来。</p>
+    <p>你掏的钱和实际感受到的流畅之间,差的可能就是一次专业的精调。</p>
+    <p class="glow">公子调试,把每一帧都磨成刀锋。</p>
   </div>
+</section>
+
+<!-- ==================== 03 优势 ==================== -->
+<section id="edge">
   <div class="container">
-    <div class="why-grid fade-up">
-      <div class="why-card">
-        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-        <h3>10 分钟上线</h3>
-        <p>注册即用，模板开箱。不需要实施顾问，不需要全员培训，也不需要和旧系统做痛苦的数据迁移。</p>
+    <div class="shead fade">
+      <div class="kicker">02 <span class="num-mark">—</span> 我们的优势 <b>EDGE</b></div>
+      <h2>不是教程能学到的方案,是上万台机器验证过的答案</h2>
+      <p>从系统底层到应用层,从进程调度到电源策略,从显卡驱动到大小核分配——全部重新调一遍。</p>
+    </div>
+    <div class="grid4">
+      <div class="card fade d1">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div>
+        <h3>系统级深度精调</h3>
+        <p>进程调度、电源策略、大小核绑定、注册表瘦身——每一项都是在大量实战机器上验证过的标准答案,不是拍脑袋定出来的。</p>
       </div>
-      <div class="why-card">
-        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg></div>
-        <h3>稳定不掉链子</h3>
-        <p>多可用区容灾，99.98% SLA 承诺。历史数据可回溯 180 天，误删也能一键找回。</p>
+      <div class="card fade d2">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg></div>
+        <h3>延迟全链路压缩</h3>
+        <p>从鼠标点击到屏幕显示,整条链路压缩。瞄准更跟手,对枪无粘滞,关键时刻的反应快人一步。</p>
       </div>
-      <div class="why-card">
-        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-        <h3>按人计费不浪费</h3>
-        <p>只为实际使用的人付费，停用自动退费。5 人以内永久免费，团队扩张了再升级也不迟。</p>
+      <div class="card fade d3">
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.4"/><path d="M12 2.8v3.4M12 17.8v3.4M2.8 12h3.4M17.8 12h3.4M5.5 5.5l2.4 2.4M16.1 16.1l2.4 2.4M18.5 5.5l-2.4 2.4M7.9 16.1l-2.4 2.4"/></svg></div>
+        <h3>驱动 · 画质双调优</h3>
+        <p>显卡驱动精细调试、DLSS 模型选型、ICC 滤镜配置——画质与帧率同时拉满,敌人更清晰,草和树不拖后腿。</p>
+      </div>
+      <div class="card fade d4">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l2.1 4.9L19 9l-4.9 2.1L12 16l-2.1-4.9L5 9l4.9-1.1L12 3z"/><path d="M18 14.5l1.1 2.4 2.4 1.1-2.4 1.1L18 21.5l-1.1-2.4-2.4-1.1 2.4-1.1L18 14.5z"/></svg></div>
+        <h3>永久售后保障</h3>
+        <p>VIP 方案售后期间随时调试,一对一服务到底。承诺短一点没关系,说到就得做到。</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ==================== 价格 ==================== -->
+<!-- ==================== 04 效果 ==================== -->
+<section id="results">
+  <div class="container">
+    <div class="shead fade">
+      <div class="kicker">— 调试效果 <b>RESULTS</b></div>
+      <h2>真实数据,看得见的提升</h2>
+      <p>基于真实客户调试后的平均数据统计</p>
+    </div>
+    <div class="grid4">
+      <div class="card fade d1">
+        <span class="tag">FRAME RATE</span>
+        <div class="big-num up">+35~60%</div>
+        <ul class="effect-ul">
+          <li>平均帧率显著提升</li>
+          <li>Low 帧更稳定,不再掉帧</li>
+          <li>1% Low 帧提升明显</li>
+        </ul>
+      </div>
+      <div class="card fade d2">
+        <span class="tag">IMAGE QUALITY</span>
+        <div class="big-num">脱胎换骨</div>
+        <ul class="effect-ul">
+          <li>画面更清晰,无噪点</li>
+          <li>远景不再模糊,细节更丰富</li>
+          <li>色彩更纯净,敌人更醒目</li>
+        </ul>
+      </div>
+      <div class="card fade d3">
+        <span class="tag">LATENCY</span>
+        <div class="big-num up">-30~50%</div>
+        <ul class="effect-ul">
+          <li>鼠标响应更快,无粘滞感</li>
+          <li>瞄准跟枪更丝滑</li>
+          <li>操作延迟明显降低</li>
+        </ul>
+      </div>
+      <div class="card fade d4">
+        <span class="tag">SYSTEM</span>
+        <div class="big-num">全面升级</div>
+        <ul class="effect-ul">
+          <li>系统更流畅,开机更快</li>
+          <li>CPU / GPU 占用率优化</li>
+          <li>不再闪退、蓝屏、自动重启</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 05 方案 ==================== -->
 <section id="pricing">
-  <div class="section-header fade-up">
-    <h2>简单透明的价格</h2>
-    <p>先用起来，觉得值再付费</p>
-  </div>
   <div class="container">
-    <div class="price-grid fade-up">
+    <div class="shead fade">
+      <div class="kicker">— 服务方案 <b>PRICING</b></div>
+      <h2>选择适合你的精调方案</h2>
+      <p>三档方案 · 价格透明 · 一对一服务</p>
+    </div>
+    <div class="price-grid">
 
-      <div class="price-card">
-        <div class="price-name">免费版</div>
-        <div class="price-desc">适合刚起步的小团队，功能够用</div>
-        <div class="price-num">¥0</div>
-        <div class="price-unit">5 人以内永久免费</div>
-        <ul class="price-list">
-          <li>基础协作与文档</li>
-          <li>3 条自动化流程</li>
-          <li>1GB 存储空间</li>
-          <li>社区支持</li>
+      <div class="price-card fade d1">
+        <div class="p-name">基础性能调优</div>
+        <div class="p-sub">当前系统整体提升,立竿见影</div>
+        <div class="p-price"><small>¥</small>38</div>
+        <div class="p-time">预计耗时 20-40 min</div>
+        <p class="p-desc">在当前系统上做全面提升,让游戏体验立竿见影</p>
+        <ul class="p-list">
+          <li>系统优化设置</li>
+          <li>游戏画质调试</li>
+          <li>鼠标优化 · 注册表优化</li>
+          <li>电源设置精优</li>
+          <li class="hi">DLSS 模型优化</li>
+          <li class="hi">ICC 滤镜配置</li>
         </ul>
-        <a href="apply.html" class="btn-ghost">直接开始</a>
+        <p class="p-note-line">✓ 24 小时售后,当日问题免费处理</p>
+        <a href="#contact" class="btn btn-ghost" style="margin-top:16px">立即联系 →</a>
       </div>
 
-      <div class="price-card featured">
-        <div class="price-flag">最受欢迎</div>
-        <div class="price-name">专业版</div>
-        <div class="price-desc">成长期团队的主力选择，解锁全部核心能力</div>
-        <div class="price-num">¥39<small> /人/月</small></div>
-        <div class="price-unit">按年付享 8 折</div>
-        <ul class="price-list">
-          <li>无限自动化流程</li>
-          <li>完整数据看板与报表</li>
-          <li>100GB 存储空间</li>
-          <li>开放 API 与 Webhook</li>
-          <li>工作日 4 小时响应</li>
+      <div class="price-card featured fade d2">
+        <div class="flag">推荐 · 售后期 15 天</div>
+        <div class="p-name">全面优化</div>
+        <div class="p-sub">解决闪退 / Low 不稳 / 掉帧 + 延迟全链路压缩</div>
+        <div class="p-price"><small>¥</small>98</div>
+        <div class="p-time">预计耗时 60-90 min</div>
+        <p class="p-desc">帧率 + 画面 + 响应延迟,三位一体系统性提升</p>
+        <ul class="p-list">
+          <li class="hi">解决闪退 / Low 不稳 / 掉帧</li>
+          <li>电竞专属系统重做 · 注册表深度优化</li>
+          <li>鼠标粘手感解决 · 瞄准丝滑优化</li>
+          <li>系统延迟优化 · 驱动精细优化</li>
+          <li>电源计划精调 · CPU 核心绑定</li>
+          <li>N 卡控制面板 · Windows 设置优化</li>
+          <li class="hi">DLSS 模型优化</li>
+          <li class="hi">ICC 滤镜配置</li>
         </ul>
-        <a href="apply.html" class="btn-primary">开始 14 天试用</a>
+        <p class="p-note-line">✓ 售后期间任何问题免费处理</p>
+        <a href="#contact" class="btn btn-primary" style="margin-top:16px">立即联系 →</a>
       </div>
 
-      <div class="price-card">
-        <div class="price-name">企业版</div>
-        <div class="price-desc">有合规、私有化与专属服务需求的组织</div>
-        <div class="price-num">定制</div>
-        <div class="price-unit">按需报价，支持私有部署</div>
-        <ul class="price-list">
-          <li>SSO 单点登录与审计日志</li>
-          <li>私有化 / 专有云部署</li>
-          <li>专属客户成功经理</li>
-          <li>7×24 小时技术支持</li>
-          <li>定制开发与数据迁移</li>
+      <div class="price-card fade d3">
+        <div class="flag" style="background:var(--silver);">VIP · 永久售后</div>
+        <div class="p-name">超级优化 VIP 定制</div>
+        <div class="p-sub">一次投入,永久售后随时调试</div>
+        <div class="p-price"><small>¥</small>298</div>
+        <div class="p-time">顶级定制 · 一对一全程服务</div>
+        <p class="p-desc">彻底解决性能焦虑,长期专属技术支持</p>
+        <ul class="p-list">
+          <li class="hi">帧率显著提升 · 画面脱胎换骨</li>
+          <li>系统延迟大幅降低 · 操作更精准</li>
+          <li>特调专属系统镜像部署</li>
+          <li>瓶颈精准定位 · 疑难杂症专项解决</li>
+          <li>系统美化:桌面布局与视觉定制</li>
+          <li>直播调试:OBS / 推流参数调优</li>
+          <li>故障排查:蓝屏 / 黑屏 / 掉驱动</li>
+          <li class="hi">永久售后 · 随时调试</li>
         </ul>
-        <a href="apply.html" class="btn-ghost">联系我们</a>
+        <p class="p-note-line">✓ 售后期间任何问题免费处理</p>
+        <a href="#contact" class="btn btn-ghost" style="margin-top:16px">立即联系 →</a>
       </div>
 
+    </div>
+
+    <div class="note-panel fade">
+      <b>重要提示:</b> 各方案均为远程精调服务,请保持驱动版本与系统设置不变。
+      <span>✓ 游戏赛季更新不会影响已完成的调优策略 &nbsp;✓ 售后期内可随时联系,响应及时</span>
+      <span>✓ 调试不满意可当天申请退款,并享免费重装正版系统;无需重装则恢复原设置(需收取少量人工成本费)。</span>
     </div>
   </div>
 </section>
 
-<!-- ==================== FAQ ==================== -->
-<section id="faq">
-  <div class="section-header fade-up">
-    <h2>常见问题</h2>
-    <p>还有别的疑问，随时找我们聊</p>
-  </div>
-  <div class="faq fade-up">
-
-    <div class="faq-item">
-      <div class="faq-q">免费版真的完全免费吗？有没有隐藏限制？</div>
-      <div class="faq-a">完全免费，不需要绑定信用卡。5 人以内、3 条自动化流程、1GB 存储空间，这些额度用完了也不会自动扣费，只会提示你升级。对大多数 3–5 人的小团队来说，免费版就够用了。</div>
+<!-- ==================== 06 联系 ==================== -->
+<section id="contact">
+  <div class="container">
+    <div class="cta-box fade">
+      <h2>别让硬件白等,现在就磨刀</h2>
+      <p>说清你的配置与痛点,1 对 1 沟通后给出方案;调试全程可监督,无提升当天退款。</p>
+      <div class="contact-chips">
+        <a class="chip" href="mailto:tune@obsgz.com">邮箱联系</a>
+        <a class="chip" href="#contact">微信 / 企业微信(二维码待接入)</a>
+      </div>
     </div>
-
-    <div class="faq-item">
-      <div class="faq-q">从现在的系统迁移过来麻烦吗？</div>
-      <div class="faq-a">不麻烦。我们提供 Excel / CSV 一键导入，主流协作工具（飞书、钉钉、企业微信、Trello）都有官方迁移助手。历史数据保留原格式，字段可以手动映射。如果数据量特别大，企业版会安排专人协助迁移。</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">数据放在哪里？安全怎么保证？</div>
-      <div class="faq-a">数据默认存储在境内机房，传输全程 TLS 加密，静态数据 AES-256 加密。支持字段级权限、操作审计日志和 SSO 单点登录。企业版可以选择私有化部署，数据完全不出你的机房。</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">中途想换套餐或者不用了，能退吗？</div>
-      <div class="faq-a">随时可以升降级，按剩余天数折算差价。年度套餐在开通后 30 天内如果不满意，可以无理由全额退款。停用账号后数据会保留 90 天，期间随时可以恢复。</div>
-    </div>
-
   </div>
 </section>
-
-<!-- ==================== 底部 CTA ==================== -->
-<div class="cta">
-  <div class="cta-inner fade-up">
-    <h2>今天就让团队跑起来</h2>
-    <p>10 分钟完成配置，不需要培训，不需要信用卡</p>
-    <div class="hero-btns">
-      <a href="apply.html" class="btn-primary">免费开始使用</a>
-      <a href="apply.html" class="btn-ghost">预约产品演示</a>
-    </div>
-  </div>
-</div>
 
 <!-- ==================== 页脚 ==================== -->
 <footer class="footer">
-  <div class="footer-brand">
-    <div class="nav-logo-icon">云</div>
-    <span>云枢 CloudHub</span>
+  <div class="brand">
+    <span class="brand-mark"><img src="logo.jpg" alt="公子调试"></span>
+    <span class="brand-name">公子调试<small>TUNE</small></span>
   </div>
-  <div class="footer-links">
-    <a href="#features">产品功能</a>
-    <a href="#pricing">价格方案</a>
-    <a href="#faq">常见问题</a>
-    <a href="apply.html">联系我们</a>
-  </div>
-  <div class="footer-copy">Copyright 2026 云枢 CloudHub. All rights reserved.</div>
-  <div class="footer-copy" style="margin-top:6px"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" style="color:var(--text-muted)">京ICP备00000000号</a></div>
+  <div class="footer-copy">© 2026 公子调试. 占位版权信息 · <a href="#top">返回顶部</a></div>
+  <div class="footer-copy" style="margin-top:6px"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">京ICP备00000000号(上线前替换)</a></div>
 </footer>
 
+</div><!-- /.layer -->
+
 <script>
-// 导航滚动态
+/* ==========================================================================
+   刀光运镜 FX (Blade Cam)
+   实现: 全屏透明 Canvas, 三层内容
+     L1 静态银尘粒子(悬浮氛围)
+     L2 刀光事件: 一道斜掠光刃 + 刀尖火花, 周期性触发
+     L3 镜头扫光: 刀光同步的全屏斜向光带(运镜感), 'lighter' 混合低透明度
+   特性: 粒子/光效均为低透明度提亮(不遮字), pointer-events:none, 内容 z 轴更高
+   性能约束(硬性):
+     1) DPR 上限 1.75(桌面)/1.5(移动)
+     2) 粒子数按面积自适应, 上限 桌面90 / 移动28
+     3) 单循环 rAF + delta 时间步; 页面隐藏自动暂停
+     4) 禁用昂贵 shadowBlur 高频路径, 发光用径向渐变模拟
+     5) prefers-reduced-motion 或 ?fx=off 完全关闭
+     6) 低算力设备(hardwareConcurrency<=2)自动降档
+   ========================================================================== */
+(function(){
+  'use strict';
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fxOff = /[?&]fx=off/.test(location.search);
+  var lowEnd = (navigator.hardwareConcurrency || 8) <= 2;
+  if (reduced || fxOff || lowEnd) return;   // 关闭/降档直接跳过(连粒子都不开=零开销)
+
+  var cv = document.getElementById('fx');
+  var ctx = cv.getContext('2d');
+  if (!cv || !ctx) return;   // 不支持 canvas 则静默跳过, 不影响页面
+  var W = 0, H = 0, DPR = 1;
+  var mobile = window.matchMedia('(max-width:767px)').matches;
+  var tab = window.matchMedia('(max-width:1023px)').matches && !mobile;
+  var running = false, rafId = 0, last = 0;
+
+  var MAX_P = mobile ? 28 : (tab ? 55 : 90);
+  var bladeEvery = mobile ? [11000, 21000] : [6500, 15000]; // 触发间隔(ms)
+  var bladeDur = 1900;      // 一次刀光运镜总时长 ms
+  var sparkN = mobile ? 16 : 34;
+
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 1.75);
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    seedParticles();
+  }
+
+  /* ---------- L1 银尘粒子 ---------- */
+  var parts = [];
+  function seedParticles(){
+    var want = Math.min(MAX_P, Math.round((W * H) / 26000));
+    parts = parts.slice(0, want);
+    while (parts.length < want){
+      parts.push(newP());
+    }
+  }
+  function newP(){
+    return {
+      x: Math.random() * W, y: Math.random() * H,
+      r: 0.4 + Math.random() * 1.3,
+      vx: (Math.random() - .5) * .12,
+      vy: (Math.random() - .5) * .12 - .03,
+      a: 0.03 + Math.random() * 0.10,      // 很低, 仅为氛围
+      ph: Math.random() * Math.PI * 2,
+      sp: 0.5 + Math.random() * 0.8
+    };
+  }
+  function stepParts(dt){
+    for (var i = 0; i < parts.length; i++){
+      var p = parts[i];
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      if (p.x < -8) p.x = W + 8; if (p.x > W + 8) p.x = -8;
+      if (p.y < -8) p.y = H + 8; if (p.y > H + 8) p.y = -8;
+      ctx.globalAlpha = p.a * (0.7 + 0.3 * Math.sin(last / 1000 * p.sp + p.ph));
+      ctx.fillStyle = '#c7cdd9';
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* ---------- L2+L3 刀光事件 ---------- */
+  var blades = [];          // 活跃刀光
+  function spawnBlade(){
+    // 随机入场边与倾斜角(运镜方向: 左下→右上 或 左上→右下 交替偏随机)
+    var fromLeft = Math.random() < .5;
+    var y0 = H * (0.25 + Math.random() * 0.5);
+    var angle = (Math.random() - .5) * 26 * Math.PI / 180; // 相对竖直线的倾角
+    var speed = (W + H) / (bladeDur * 0.55);               // px/ms
+    var t = performance.now();
+    blades.push({
+      x: fromLeft ? -200 : W + 200,
+      y: y0,
+      dx: (fromLeft ? 1 : -1) * Math.cos(angle) * speed,
+      dy: Math.sin(angle) * speed * (fromLeft ? 0.35 : -0.35),
+      born: t, dur: bladeDur, life: 1, tipA: 1,
+      sparks: [], sparkT: t
+    });
+  }
+  function sparks(bl, t){
+    // 刀尖喷薄火花(短命银粒)
+    var n = mobile ? 5 : 9;
+    for (var i = 0; i < n; i++){
+      bl.sparks.push({
+        x: bl.x, y: bl.y,
+        vx: (Math.random() - .5) * .55 - bl.dx * .004,
+        vy: (Math.random() - .5) * .55 - bl.dy * .004,
+        r: 0.6 + Math.random() * 1.4, a: .5 + Math.random() * .4,
+        born: t, dur: 420 + Math.random() * 380
+      });
+    }
+  }
+  function drawBlade(bl){
+    var t = performance.now();
+    var k = (t - bl.born) / bl.dur;
+    // 光刃本体: 细长高亮 + 两侧衰减; 低透明度防止遮挡文字
+    var grad = ctx.createLinearGradient(bl.x, bl.y, bl.x - bl.dx * 60, bl.y - bl.dy * 60);
+    grad.addColorStop(0, 'rgba(255,255,255,.88)');
+    grad.addColorStop(0.35, 'rgba(216,222,238,.32)');
+    grad.addColorStop(1, 'rgba(216,222,238,0)');
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = Math.max(0, (1 - k * 1.25)) * .9;
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 2.4;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(bl.x - bl.dx * 46, bl.y - bl.dy * 46);
+    ctx.lineTo(bl.x, bl.y);
+    ctx.stroke();
+    // 刀光尾迹(拉长的金属扫掠)
+    ctx.lineWidth = 1;
+    ctx.globalAlpha = Math.max(0, (1 - k * 1.3)) * .5;
+    ctx.beginPath();
+    ctx.moveTo(bl.x - bl.dx * 180, bl.y - bl.dy * 180);
+    ctx.lineTo(bl.x - bl.dx * 20, bl.y - bl.dy * 20);
+    ctx.stroke();
+    // 刀尖光晕(径向渐变模拟 glow, 避免 shadowBlur)
+    var g2 = ctx.createRadialGradient(bl.x, bl.y, 0, bl.x, bl.y, 46);
+    g2.addColorStop(0, 'rgba(255,255,255,.30)');
+    g2.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.globalAlpha = Math.max(0, (1 - k * 1.4));
+    ctx.fillStyle = g2;
+    ctx.beginPath(); ctx.arc(bl.x, bl.y, 46, 0, 6.2832); ctx.fill();
+    ctx.globalAlpha = 1;
+    // 火花
+    if (t - bl.sparkT > 55 && k < 0.78){ bl.sparkT = t; sparks(bl, t); }
+    for (var i = bl.sparks.length - 1; i >= 0; i--){
+      var s = bl.sparks[i];
+      var sk = (t - s.born) / s.dur;
+      if (sk >= 1){ bl.sparks.splice(i, 1); continue; }
+      s.x += s.vx; s.y += s.vy; s.vx *= .985; s.vy *= .985;
+      ctx.globalAlpha = s.a * (1 - sk);
+      ctx.fillStyle = sk > .5 ? '#8d95a6' : '#eef0f6';
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r * (1 - sk * .6), 0, 6.2832); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
+
+    /* L3 镜头扫光: 刀光所在直线扩展成整屏斜向光带,
+       制造"镜头被刀光带过"的运镜感。峰值透明度≤0.14, 不影响阅读 */
+    var sw = Math.max(0, 1 - Math.abs(k - 0.42) / 0.38); // 0.42 时刻最强
+    if (sw > 0.02){
+      var sweepLen = Math.hypot(W, H) * 1.2;
+      var thick = 150 + 260 * sw;
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.save();
+      ctx.translate(bl.x, bl.y);
+      ctx.rotate(Math.atan2(bl.dy, bl.dx));
+      var g3 = ctx.createLinearGradient(-thick / 2, 0, thick / 2, 0);
+      g3.addColorStop(0, 'rgba(214,220,232,0)');
+      g3.addColorStop(0.5, 'rgba(226,231,242,' + (0.10 + 0.05 * sw).toFixed(3) + ')');
+      g3.addColorStop(1, 'rgba(214,220,232,0)');
+      ctx.fillStyle = g3;
+      ctx.globalAlpha = 1;
+      ctx.fillRect(-sweepLen / 2, -thick / 2, sweepLen, thick);
+      ctx.restore();
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    // 生命周期
+    if (k >= 1){
+      bl.dead = true;
+    }
+    bl.k = k;
+  }
+
+  /* ---------- 主循环 ---------- */
+  var nextBladeAt = performance.now() + 2200; // 进场前先安静 ~2s
+  function tick(now){
+    if (!running) return;
+    var dt = Math.min(now - last, 50) || 16; last = now;
+    ctx.clearRect(0, 0, W, H);
+    stepParts(dt);
+    if (now >= nextBladeAt){
+      if (blades.length === 0){ spawnBlade(); }     // 同时只允许一道刀光
+      nextBladeAt = now + bladeEvery[0] + Math.random() * (bladeEvery[1] - bladeEvery[0]);
+    }
+    for (var i = blades.length - 1; i >= 0; i--){
+      var b = blades[i];
+      b.x += b.dx * dt; b.y += b.dy * dt;
+      drawBlade(b);
+      if (b.dead || b.x < -W || b.x > W * 2 || b.y < -H || b.y > H * 2) blades.splice(i, 1);
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+  function start(){ if (running) return; running = true; last = performance.now(); rafId = requestAnimationFrame(tick); }
+  function stop(){ running = false; cancelAnimationFrame(rafId); }
+
+  window.addEventListener('resize', resize, {passive:true});
+  document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+  resize();
+  start();
+})();
+</script>
+
+<script>
+/* ==================== 页面交互 ==================== */
+// 导航滚动毛玻璃增强
 window.addEventListener('scroll', function(){
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+  document.querySelector('.nav').style.borderColor =
+    window.scrollY > 10 ? 'rgba(214,220,232,.22)' : 'rgba(214,220,232,.10)';
 }, {passive:true});
 
 // 移动端菜单
@@ -616,41 +826,14 @@ document.getElementById('navLinks').addEventListener('click', function(e){
 });
 
 // 滚动淡入
-var obs = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){
-    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
   });
-}, {threshold:0.15});
-document.querySelectorAll('.fade-up').forEach(function(el){ obs.observe(el); });
-
-// FAQ 手风琴
-document.querySelectorAll('.faq-q').forEach(function(q){
-  q.addEventListener('click', function(){
-    var item = q.parentElement;
-    var wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
-    if (!wasOpen) item.classList.add('open');
-  });
-});
-
-// Hero 打字机
-(function(){
-  var phrases = ['审批流程自动跑，不用催', '经营数据实时更新，不用等周报', '跨部门协作不再靠群聊传话', '重复的工作，交给系统'];
-  var el = document.getElementById('typed');
-  var pi = 0, ci = 0, deleting = false;
-  function tick(){
-    var text = phrases[pi];
-    if (!deleting) {
-      el.textContent = text.slice(0, ++ci);
-      if (ci === text.length) { deleting = true; return setTimeout(tick, 1800); }
-    } else {
-      el.textContent = text.slice(0, --ci);
-      if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; return setTimeout(tick, 400); }
-    }
-    setTimeout(tick, deleting ? 45 : 90);
-  }
-  tick();
-})();
+}, {threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.fade').forEach(function(el){ io.observe(el); });
+// hero 首屏元素直接显示(避免在无 JS 或不触发时空白)
+document.querySelectorAll('.hero .fade').forEach(function(el){ el.classList.add('in'); });
 </script>
 
 </body>
