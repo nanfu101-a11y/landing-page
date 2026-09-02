@@ -3,26 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>公子调试 - Windows 深度性能精调</title>
-<meta name="description" content="公子调试,Windows 系统深度性能优化服务。从进程调度到电源策略,从驱动到大小核分配,让每一帧都锋利如初。">
+<title>公子调试 · 手游 / 端游直播调试服务(网络 · 推流 · 编码 · 画质 · 音画)</title>
+<meta name="description" content="公子调试专注直播调试服务:网络环境搭建、推流参数调优、编码与延迟调试、画质与码率设置、音画同步校准,服务手游与端游直播从业者。不是帧率优化,不做装机,专注把「播出去的那一路」调稳定、调清晰、调低延迟。">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="icon" type="image/jpeg" sizes="32x32" href="favicon.jpg">
 <!--
   ==========================================================================
-  公子调试 · Windows 深度性能精调 — 单页营销站(占位版)
-  参考版式: wu.wujidj.cn(无极精调站结构) | 视觉主题: 黑银 | 特效: 刀光运镜
+  公子调试 · 直播调试服务站(占位内容版)
+  视觉: 黑银主题 + 刀光运镜(延续品牌) | 单文件自包含,零外部依赖
 
-  板块对应关系(参考站 -> 本页):
-    Hero(价格速览条)  ->  #top       品牌区+4 速览指标
-    01 问题(痛点4格)   ->  #pain      痛点/影响/表现/原因
-    痛点叙述长文        ->  #story     居中长文案
-    02 优势(4卡)        ->  #edge      4 张能力卡
-    RESULTS 效果(4卡)   ->  #results  4 项数据卡
-    PRICING 三档方案     ->  #pricing  3 档价格卡+提示+注意事项
-    联系/页脚            ->  #contact   底部 CTA + 页脚
+  定位差异(核心): 本站只做「直播调试」——
+    网络环境搭建 / 推流参数调优 / 编码与延迟调试 / 画质与码率设置 / 音画同步校准
+    明确不做: 游戏帧率优化 / 硬件超频 / 装机 / 系统美化(见 #scope 边界表)
 
-  响应式断点: >=1024 桌面满配 / 768-1023 平板(2 列) / <768 移动(1 列+汉堡)
-  特效性能约束: 见文件底部 FX 配置与 <style> 内注释;支持自动降级与手动关闭
+  板块对应:
+    #top       服务定位与价值主张(Hero + 速览)
+    #scope     定位边界:直播调试 vs 性能优化(帮客户理解专长边界)
+    #services  直播调试服务清单(6 项)+ 收费说明(3 档 + 收费规则)
+    #cases     典型调试案例(3 例,脱敏)
+    #process   工具与流程(4 步流程 + 工具清单)
+    #reviews   客户评价(3 条,占位)
+    #booking   联系方式 + 在线预约表单(演示态,FORM_MODE 可切 live)
+
+  响应式: >=1024 满配 / 768-1023 平板 2 列 / <768 单列+汉堡
+  特效性能约束: 同原刀光引擎(DPR 上限 / 粒子面积自适应 / reduced-motion 与 ?fx=off 关闭)
   ==========================================================================
 -->
 <style>
@@ -50,7 +54,6 @@ body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
   background:var(--bg0);color:var(--silver);line-height:1.7;overflow-x:hidden;
 }
-/* 静态背景层: 深空金属底 + 暗角, 全在 canvas 之下 */
 body::before{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
@@ -59,12 +62,10 @@ body::before{
     radial-gradient(ellipse 90% 70% at 50% 115%,rgba(0,0,0,.85) 0%,transparent 60%),
     var(--bg0);
 }
-/* 刀光运镜 Canvas: 固定全屏, 在背景上/内容下, 不挡交互 */
 #fx{position:fixed;inset:0;z-index:1;pointer-events:none;width:100%;height:100%}
 a{color:inherit;text-decoration:none}
 img{max-width:100%}
 
-/* 内容层盖在特效上方; 所有文字/按钮都有相对内容背景保证可读 */
 .layer{position:relative;z-index:2}
 .container{max-width:1120px;margin:0 auto;padding:0 24px}
 .kicker{
@@ -118,16 +119,16 @@ img{max-width:100%}
 }
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
 .hero-title{
-  font-size:clamp(40px,7.4vw,76px);font-weight:900;line-height:1.08;letter-spacing:-2px;
+  font-size:clamp(38px,6.8vw,70px);font-weight:900;line-height:1.1;letter-spacing:-2px;
   background:var(--grad-title);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   margin-bottom:22px;text-shadow:0 0 60px rgba(200,210,230,.08);
 }
-.hero-sub{font-size:clamp(15px,2vw,18px);color:var(--silver-dim);max-width:640px;margin:0 auto;font-weight:400}
+.hero-sub{font-size:clamp(15px,2vw,18px);color:var(--silver-dim);max-width:680px;margin:0 auto;font-weight:400;line-height:1.9}
 .hero-sub b{color:var(--silver-hi);font-weight:600}
 .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:40px}
 .btn{
   display:inline-flex;align-items:center;gap:8px;padding:14px 34px;border-radius:10px;
-  font-size:14px;font-weight:600;transition:all .25s;cursor:pointer;
+  font-size:14px;font-weight:600;transition:all .25s;cursor:pointer;border:none;
 }
 .btn-primary{
   color:#0a0b0f;background:var(--grad-steel);
@@ -138,7 +139,6 @@ img{max-width:100%}
   color:var(--silver);border:1px solid var(--line-hi);background:rgba(200,208,222,.04);
 }
 .btn-ghost:hover{border-color:var(--silver);background:rgba(210,218,232,.08);color:var(--silver-hi)}
-/* Hero 速览条(对应参考站 ¥38/30-50%/24h/1对1) */
 .hero-stats{
   display:flex;align-items:stretch;justify-content:center;flex-wrap:wrap;gap:0;
   margin:64px auto 0;max-width:880px;border:1px solid var(--line);
@@ -152,19 +152,18 @@ img{max-width:100%}
 
 /* ==================== 通用区块 ==================== */
 section{padding:96px 0}
-.shead{text-align:center;max-width:720px;margin:0 auto 60px}
+.shead{text-align:center;max-width:760px;margin:0 auto 60px}
 .shead h2{font-size:clamp(26px,4vw,40px);font-weight:900;color:var(--silver-hi);letter-spacing:-1px;line-height:1.2}
 .shead .kicker{margin-bottom:16px}
-.shead p{color:var(--silver-dim);font-size:14px;margin-top:12px}
+.shead p{color:var(--silver-dim);font-size:14px;margin-top:12px;line-height:1.9}
 
-/* ==================== 01 问题四格 ==================== */
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+/* 通用卡片底子 */
 .card{
   border:1px solid var(--line);border-radius:14px;background:var(--panel);
   backdrop-filter:blur(8px);padding:26px 22px;transition:border-color .3s,transform .3s;
   position:relative;overflow:hidden;
 }
-.card::after{ /* 顶边银线(扫过光效的静态锚点) */
+.card::after{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,rgba(214,220,232,.5),transparent);
   opacity:0;transition:opacity .4s;
@@ -174,35 +173,64 @@ section{padding:96px 0}
 .card .tag{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--muted);display:block;margin-bottom:12px}
 .card h3{font-size:17px;font-weight:700;color:var(--silver-hi);margin-bottom:8px}
 .card p{font-size:13px;color:var(--silver-dim);line-height:1.8}
-.card .big{font-size:13px;color:var(--silver);font-weight:600}
 .card .icon{
   width:40px;height:40px;border-radius:10px;margin-bottom:16px;
   border:1px solid var(--line-hi);background:linear-gradient(135deg,rgba(210,218,232,.10),rgba(210,218,232,.02));
   display:flex;align-items:center;justify-content:center;
 }
 .card .icon svg{width:19px;height:19px;stroke:var(--steel);fill:none;stroke-width:1.6}
-.neg b{color:#e6e9f0}
 
-/* ==================== 02 叙述段 ==================== */
-.story{max-width:760px;margin:0 auto;padding:0 24px;text-align:left}
-.story p{color:var(--silver-dim);font-size:15px;line-height:2.1;margin-bottom:20px}
-.story p.hl{color:var(--silver);font-size:16px;line-height:2;border-left:2px solid var(--silver);padding-left:18px}
-.story p b{color:var(--silver-hi)}
-.story p.glow{color:var(--silver-hi);font-size:19px;font-weight:700;text-align:center;margin:34px 0;letter-spacing:.5px}
-
-/* ==================== 03 优势 / 04 效果 两套4卡共用 grid4 */
-.grid4 .card h3{font-size:16px}
-.big-num{
-  font-size:clamp(30px,4.4vw,44px);font-weight:900;letter-spacing:-1.5px;
-  background:var(--grad-title);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;
+/* ==================== 01 定位边界(直播调试 vs 性能优化) ==================== */
+.scope-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:20px;align-items:stretch}
+.scope-col{
+  border:1px solid var(--line);border-radius:18px;background:var(--panel);
+  backdrop-filter:blur(10px);padding:30px 28px;position:relative;overflow:hidden;
 }
-.up{color:#c9ced8} /* 黑银下用银白表现提升,不引入彩色 */
-.effect-ul{list-style:none;margin-top:12px}
-.effect-ul li{font-size:12px;color:var(--muted);padding:3px 0 3px 16px;position:relative}
-.effect-ul li::before{content:'';position:absolute;left:0;top:10px;width:7px;height:7px;border-top:1px solid var(--silver);border-right:1px solid var(--silver);transform:rotate(45deg)}
+.scope-col.do{box-shadow:inset 0 0 0 1px rgba(214,220,232,.14)}
+.scope-col.dont{background:rgba(10,11,15,.6)}
+.scope-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.scope-head .pill{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:2px;padding:4px 12px;border-radius:20px;
+}
+.scope-col.do .pill{background:var(--grad-steel);color:#0a0b0f;font-weight:700;box-shadow:0 0 14px rgba(210,218,232,.3)}
+.scope-col.dont .pill{border:1px solid var(--line-hi);color:var(--muted)}
+.scope-col h3{font-size:19px;font-weight:800;color:var(--silver-hi)}
+.scope-sub{font-size:12px;color:var(--muted);margin:4px 0 18px}
+.scope-list{list-style:none}
+.scope-list li{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:11px 0;border-top:1px solid var(--line);
+  font-size:13.5px;color:var(--silver-dim);line-height:1.7;
+}
+.scope-list li:first-child{border-top:0}
+.scope-list li b{display:block;color:var(--silver);font-weight:600;font-size:13.5px}
+.scope-list li .sub{color:var(--muted);font-size:12px}
+.scope-list .mk{
+  flex-shrink:0;width:20px;height:20px;border-radius:50%;margin-top:2px;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;
+}
+.scope-list.do-list .mk{background:rgba(214,220,232,.14);color:var(--silver-hi)}
+.scope-list.no-list .mk{border:1px solid var(--line-hi);color:var(--muted);font-size:11px}
+.scope-note{
+  margin-top:24px;padding:14px 18px;border-radius:10px;
+  border:1px solid var(--line);border-left:2px solid var(--silver);
+  font-size:13px;color:var(--silver);line-height:1.9;background:rgba(10,11,15,.5);
+}
+.scope-note b{color:var(--silver-hi)}
 
-/* ==================== 05 价格 ==================== */
-.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+/* ==================== 02 服务清单 ==================== */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.svc{display:flex;flex-direction:column}
+.svc .fee{
+  margin-top:auto;padding-top:14px;font-family:var(--font-mono);font-size:12px;color:var(--silver);
+  display:flex;align-items:center;gap:8px;
+}
+.svc .fee::before{content:'';width:18px;height:1px;background:var(--line-hi)}
+.svc .fee b{color:var(--silver-hi);font-size:14px;font-weight:700}
+.svc p{flex:1}
+
+/* ==================== 收费(三档) ==================== */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch;margin-top:64px}
 .price-card{
   display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;
   background:var(--panel);backdrop-filter:blur(10px);padding:32px 28px;position:relative;
@@ -220,10 +248,12 @@ section{padding:96px 0}
   font-size:11px;font-weight:700;white-space:nowrap;letter-spacing:1px;
   box-shadow:0 0 16px rgba(210,218,232,.35);
 }
+.flag.alt{background:var(--silver)}
 .p-name{font-size:15px;font-weight:700;color:var(--silver-hi);margin-bottom:4px}
 .p-sub{font-size:12px;color:var(--muted);margin-bottom:18px}
-.p-price{font-size:40px;font-weight:900;color:var(--silver-hi);letter-spacing:-2px;line-height:1}
+.p-price{font-size:36px;font-weight:900;color:var(--silver-hi);letter-spacing:-2px;line-height:1}
 .p-price small{font-size:14px;font-weight:600;color:var(--silver-dim);letter-spacing:0}
+.p-price .per{font-size:13px;font-weight:600;color:var(--silver-dim);letter-spacing:0;margin-left:4px}
 .p-time{font-size:12px;color:var(--muted);margin:10px 0 18px;font-family:var(--font-mono)}
 .p-desc{font-size:13px;color:var(--silver-dim);border-top:1px solid var(--line);padding-top:16px;margin-bottom:14px;line-height:1.8}
 .p-list{list-style:none;flex:1;margin-bottom:22px}
@@ -234,9 +264,8 @@ section{padding:96px 0}
 }
 .p-list li.hi{color:var(--silver)}
 .p-list li.hi::before{border-color:var(--silver-hi)}
-.p-note-line{font-size:12px;color:var(--muted);margin:10px 0 0;border-top:1px dashed var(--line);padding-top:12px;line-height:1.7}
+.p-note-line{font-size:12px;color:var(--muted);margin:0 0 16px;border-top:1px dashed var(--line);padding-top:12px;line-height:1.7}
 .price-card .btn{justify-content:center;width:100%}
-.price-card .btn-primary{font-size:14px}
 .note-panel{
   margin-top:40px;border:1px solid var(--line);border-left:2px solid var(--silver);
   background:rgba(10,11,15,.6);border-radius:10px;padding:18px 22px;
@@ -245,28 +274,133 @@ section{padding:96px 0}
 .note-panel b{color:var(--silver)}
 .note-panel span{display:block}
 
-/* ==================== 底部 CTA ==================== */
-#contact{padding:110px 0 60px}
-.cta-box{
-  text-align:center;max-width:760px;margin:0 auto;padding:64px 40px;border-radius:24px;
-  border:1px solid var(--line-hi);background:var(--panel);
-  backdrop-filter:blur(12px);position:relative;overflow:hidden;
+/* ==================== 03 案例 ==================== */
+.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+.case-card{display:flex;flex-direction:column}
+.case-card .scene{
+  display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:1.5px;color:var(--silver);
+  padding:5px 12px;border-radius:20px;border:1px solid var(--line-hi);
+  background:rgba(210,218,232,.06);margin-bottom:14px;
 }
-.cta-box::before{
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(214,220,232,.10),transparent 70%);
+.case-card .scene::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--silver);box-shadow:0 0 8px var(--glow)}
+.case-card h3{font-size:16px;font-weight:700;color:var(--silver-hi);line-height:1.5;margin-bottom:16px}
+.case-row{padding:10px 0;border-top:1px solid var(--line)}
+.case-row .k{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--muted);display:block;margin-bottom:4px}
+.case-row p{font-size:12.5px;color:var(--silver-dim);line-height:1.75}
+.case-row .out{color:var(--silver-hi);font-weight:600;font-size:13px}
+
+/* ==================== 04 流程与工具 ==================== */
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.step .sno{
+  font-family:var(--font-mono);font-size:13px;color:var(--silver-hi);
+  border:1px solid var(--line-hi);width:34px;height:34px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+  background:linear-gradient(135deg,rgba(210,218,232,.12),rgba(210,218,232,.02));
 }
-.cta-box h2{font-size:clamp(24px,4vw,38px);font-weight:900;color:var(--silver-hi);letter-spacing:-1px;margin-bottom:14px}
-.cta-box p{color:var(--silver-dim);font-size:14px;margin-bottom:34px}
-.contact-chips{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px;position:relative}
-.chip{
-  border:1px solid var(--line-hi);border-radius:10px;padding:13px 24px;font-size:14px;
-  background:rgba(210,218,232,.05);color:var(--silver);transition:all .25s;font-weight:500;
+.tools-panel{
+  margin-top:20px;border:1px solid var(--line);border-radius:18px;
+  background:var(--panel);backdrop-filter:blur(8px);padding:30px 28px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:26px;
 }
-.chip:hover{border-color:var(--silver);color:var(--silver-hi);transform:translateY(-2px)}
+.tgroup .tname{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--silver-dim);
+  display:block;margin-bottom:14px;
+}
+.tgroup .tname::after{content:'';display:block;width:26px;height:1px;background:var(--line-hi);margin-top:8px}
+.tchips{display:flex;flex-wrap:wrap;gap:8px}
+.tchip{
+  font-size:12px;color:var(--silver);padding:6px 12px;border-radius:8px;
+  border:1px solid var(--line);background:rgba(210,218,232,.04);white-space:nowrap;
+}
+.tchip:hover{border-color:var(--line-hi);color:var(--silver-hi)}
+
+/* ==================== 05 评价 ==================== */
+.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+.review-card{display:flex;flex-direction:column}
+.review-card .qmark{
+  font-family:Georgia,serif;font-size:52px;line-height:.8;height:30px;
+  color:var(--silver-dim);opacity:.5;margin-bottom:10px;
+}
+.review-card blockquote{font-size:13.5px;color:var(--silver);line-height:1.95;flex:1}
+.review-meta{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.review-meta .avatar{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:var(--grad-steel);display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:800;color:#0a0b0f;
+}
+.review-meta .who b{display:block;font-size:13px;color:var(--silver-hi)}
+.review-meta .who span{font-size:11.5px;color:var(--muted)}
+.stars{color:var(--silver-hi);font-size:12px;letter-spacing:2px;margin-left:auto}
+.stars em{font-style:normal;font-size:11px;color:var(--muted);margin-left:4px;letter-spacing:0}
+
+/* ==================== 06 联系与预约 ==================== */
+#booking{padding:110px 0 40px}
+.booking-grid{
+  display:grid;grid-template-columns:.9fr 1.1fr;gap:20px;align-items:stretch;
+  max-width:1060px;margin:0 auto;
+}
+.book-panel{
+  border:1px solid var(--line);border-radius:18px;background:var(--panel);
+  backdrop-filter:blur(10px);padding:34px 30px;
+}
+.book-panel h3{font-size:20px;font-weight:800;color:var(--silver-hi);margin-bottom:6px}
+.book-panel .intro{font-size:13px;color:var(--silver-dim);line-height:1.9;margin-bottom:24px}
+.info-row{
+  display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--line);align-items:flex-start;
+}
+.info-row:first-of-type{border-top:0}
+.info-row .ic{
+  flex-shrink:0;width:36px;height:36px;border-radius:9px;margin-top:0;
+  border:1px solid var(--line-hi);background:rgba(210,218,232,.05);
+  display:flex;align-items:center;justify-content:center;
+}
+.info-row .ic svg{width:16px;height:16px;stroke:var(--steel);fill:none;stroke-width:1.7}
+.info-row .tx b{display:block;font-size:13px;color:var(--silver);font-weight:600}
+.info-row .tx span{font-size:12px;color:var(--muted)}
+.tip-box{
+  margin-top:20px;padding:14px 16px;border-radius:10px;font-size:12px;color:var(--silver-dim);
+  border:1px solid var(--line);border-left:2px solid var(--silver);background:rgba(10,11,15,.5);line-height:1.9;
+}
+.tip-box b{color:var(--silver)}
+
+/* 表单 */
+.field{margin-bottom:18px}
+.field label{display:block;font-size:12px;color:var(--silver-dim);margin-bottom:8px;letter-spacing:.5px}
+.field label b{color:var(--silver)}
+.field input[type=text],.field input[type=email],.field textarea,.field select{
+  width:100%;padding:12px 14px;border-radius:10px;font-size:14px;color:var(--silver);
+  background:rgba(210,218,232,.05);border:1px solid var(--line-hi);outline:none;
+  font-family:inherit;transition:border-color .2s,box-shadow .2s;appearance:none;-webkit-appearance:none;
+}
+.field select{background-image:linear-gradient(45deg,transparent 50%,var(--silver-dim) 50%),linear-gradient(135deg,var(--silver-dim) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+.field select option{background:var(--bg1);color:var(--silver)}
+.field textarea{min-height:96px;resize:vertical}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--silver);box-shadow:0 0 0 3px rgba(205,211,222,.12)}
+.field ::placeholder{color:var(--muted)}
+.opt-grid{display:flex;flex-wrap:wrap;gap:8px}
+.opt-grid input{position:absolute;opacity:0;pointer-events:none}
+.opt-grid label{
+  padding:7px 14px;border-radius:20px;font-size:12.5px;color:var(--silver-dim);
+  border:1px solid var(--line-hi);background:rgba(210,218,232,.04);cursor:pointer;
+  transition:all .2s;user-select:none;-webkit-user-select:none;
+}
+.opt-grid input:checked + label{
+  color:#0a0b0f;background:var(--grad-steel);border-color:transparent;font-weight:700;
+  box-shadow:0 0 14px rgba(210,218,232,.25);
+}
+.form-foot{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.form-ok{
+  display:none;margin-top:18px;padding:16px 18px;border-radius:12px;
+  border:1px solid rgba(214,220,232,.3);border-left:3px solid var(--silver-hi);
+  background:rgba(214,220,232,.06);color:var(--silver);font-size:13.5px;line-height:1.9;
+}
+.form-ok.show{display:block}
+.form-ok b{color:var(--silver-hi)}
+.form-mode-note{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.8}
 
 /* ==================== 页脚 ==================== */
-.footer{padding:46px 24px;text-align:center;border-top:1px solid var(--line);margin-top:40px}
+.footer{padding:46px 24px;text-align:center;border-top:1px solid var(--line);margin-top:80px}
 .footer .brand{justify-content:center;margin-bottom:12px}
 .footer-copy{font-size:12px;color:var(--muted)}
 .footer-copy a{color:var(--muted);text-decoration:underline;text-underline-offset:3px}
@@ -276,14 +410,18 @@ section{padding:96px 0}
 .fade{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
 .fade.in{opacity:1;transform:none}
 .fade.d1{transition-delay:.08s}.fade.d2{transition-delay:.16s}.fade.d3{transition-delay:.24s}.fade.d4{transition-delay:.32s}
-/* 无 JS 兜底: 未启用 JS 时所有内容直接可见 */
 html:not(.js) .fade{opacity:1;transform:none}
 
 /* ==================== 响应式 ==================== */
 @media (max-width:1023px){
-  .grid4{grid-template-columns:repeat(2,1fr)}
-  .price-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}
+  .grid3,.case-grid{grid-template-columns:repeat(2,1fr)}
+  .review-grid{grid-template-columns:repeat(2,1fr)}
+  .steps-grid{grid-template-columns:repeat(2,1fr)}
+  .tools-panel{grid-template-columns:1fr;gap:22px}
+  .price-grid{grid-template-columns:1fr;max-width:520px;margin:64px auto 0}
+  .booking-grid{grid-template-columns:1fr;max-width:640px}
   section{padding:76px 0}
+  .scope-grid{grid-template-columns:1fr}
 }
 @media (max-width:767px){
   .nav-inner{height:58px}
@@ -296,7 +434,7 @@ html:not(.js) .fade{opacity:1;transform:none}
   .nav-links a{padding:14px 24px;font-size:14px;width:100%}
   .nav-cta{display:none}
   .nav-toggle{display:block}
-  .grid4{grid-template-columns:1fr}
+  .grid3,.case-grid,.review-grid,.steps-grid{grid-template-columns:1fr}
   .hero{min-height:auto;padding:110px 0 54px}
   .hero-stats{margin-top:44px}
   .hstat{min-width:45%;border:0}
@@ -304,7 +442,7 @@ html:not(.js) .fade{opacity:1;transform:none}
   .hstat:nth-child(2)::before,.hstat:nth-child(4)::before{
     content:'';position:absolute;left:0;top:20%;height:60%;width:1px;background:var(--line);
   }
-  .cta-box{padding:48px 24px}
+  .price-card,.book-panel{padding:26px 20px}
 }
 
 /* ==================== 无障碍: 用户偏好减少动效 ==================== */
@@ -325,263 +463,424 @@ html:not(.js) .fade{opacity:1;transform:none}
   <div class="nav-inner">
     <a href="#top" class="brand">
       <span class="brand-mark"><img src="logo.jpg" alt="公子调试"></span>
-      <span class="brand-name">公子调试<small>TUNE</small></span>
+      <span class="brand-name">公子调试<small>LIVE</small></span>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="#pain">01 问题</a>
-      <a href="#edge">02 优势</a>
-      <a href="#results">效果</a>
-      <a href="#pricing">方案</a>
-      <a href="#contact">联系</a>
+      <a href="#scope">01 定位</a>
+      <a href="#services">02 服务</a>
+      <a href="#cases">03 案例</a>
+      <a href="#process">流程工具</a>
+      <a href="#reviews">评价</a>
     </div>
-    <a href="#contact" class="nav-cta">立即联系</a>
+    <a href="#booking" class="nav-cta">预约直播调试</a>
     <button class="nav-toggle" id="navToggle" aria-label="菜单">菜单</button>
   </div>
 </nav>
 
-<!-- ==================== Hero(速览) ==================== -->
+<!-- ==================== Hero: 定位与价值主张 ==================== -->
 <header class="hero" id="top">
   <div class="hero-inner container">
-    <div class="hero-badge fade in"><i></i>每帧,都值得被认真对待</div>
-    <h1 class="hero-title fade in d1">你的电脑<br>只差一次精调</h1>
-    <p class="hero-sub fade in d2">一台没有深度调校的 Windows,可能正在浪费 <b>30%~50%</b> 的硬件性能。
-    不是一键清理,不是换镜像——是把整台机器从系统底层到应用层,<b>全部重新调一遍</b>。</p>
+    <div class="hero-badge fade in"><i></i>专注直播调试 · 服务手游 / 端游直播从业者</div>
+    <h1 class="hero-title fade in d1">你的直播<br>只差一次专业调试</h1>
+    <p class="hero-sub fade in d2">我是公子调试,只做一件事:<b>直播调试</b>——网络环境搭建、推流参数调优、
+    编码与延迟调试、画质与码率设置、音画同步校准。
+    帮手游、端游主播把「播出去的那一路」调到<b>稳定、清晰、低延迟</b>。
+    <b>不做帧率优化,不做装机推荐</b>——开播出问题,就是我的主场。</p>
     <div class="hero-cta fade in d3">
-      <a href="#pricing" class="btn btn-primary">选择精调方案</a>
-      <a href="#contact" class="btn btn-ghost">直接联系公子调试</a>
+      <a href="#booking" class="btn btn-primary">预约直播调试</a>
+      <a href="#services" class="btn btn-ghost">查看服务与收费</a>
     </div>
     <div class="hero-stats fade in d4">
-      <div class="hstat"><b><em>¥</em>38</b><span>起步价 · 精优化</span></div>
-      <div class="hstat"><b>30-50%</b><span>性能回收幅度</span></div>
-      <div class="hstat"><b>24h</b><span>无提升可退</span></div>
-      <div class="hstat"><b>1对1</b><span>专属服务</span></div>
+      <div class="hstat"><b><em>5</em>大领域</b><span>网络 / 推流 / 编码 / 画质 / 音画</span></div>
+      <div class="hstat"><b><em>300+</em>场次</b><span>直播调试实战经验</span></div>
+      <div class="hstat"><b>24h</b><span>直播日售后响应</span></div>
+      <div class="hstat"><b>1对1</b><span>全程远程可控服务</span></div>
     </div>
   </div>
 </header>
 
-<!-- ==================== 01 问题 ==================== -->
-<section id="pain">
+<!-- ==================== 01 定位边界 ==================== -->
+<section id="scope">
   <div class="container">
     <div class="shead fade">
-      <div class="kicker">01 <span class="num-mark">—</span> 问题 <b>PAIN</b></div>
-      <h2>帧数忽高忽低,手感像隔了层纱</h2>
-      <p>显卡给力,处理器也不弱,可一上手就是不对劲——换外设、换屏幕,那股别扭始终没消失。</p>
+      <div class="kicker">01 <span class="num-mark">—</span> 定位边界 <b>BOUNDARY</b></div>
+      <h2>先划清边界:我调的是「直播」,不是「游戏」</h2>
+      <p>画面流畅度和直播质量,是两条完全不同的链路。很多主播分不清「电脑卡」和「直播糊」到底是谁的锅——
+      看懂下面这张表,你就知道什么时候该找我。</p>
     </div>
-    <div class="grid4">
-      <div class="card fade neg d1">
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.2 2.2M16.2 16.2l2.2 2.2M18.4 5.6l-2.2 2.2M7.8 16.2l-2.2 2.2"/><circle cx="12" cy="12" r="4"/></svg></div>
-        <span class="tag">PAIN POINT</span>
-        <h3>闪退 / 掉帧 / Low 帧</h3>
-        <p>团战掉帧、加载闪退、1% Low 帧拉胯,配置单上的性能完全没兑现。</p>
-      </div>
-      <div class="card fade d2">
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 17l5-6 4 4 6-8"/><path d="M15 7h6v6"/></svg></div>
-        <span class="tag">IMPACT</span>
-        <h3>30%~50% 性能损失</h3>
-        <p>后台全家桶、系统预加载、错误电源计划,正在后台悄悄偷走你的帧率。</p>
-      </div>
-      <div class="card fade d3">
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h10"/><circle cx="19" cy="19" r="2.4"/></svg></div>
-        <span class="tag">SYMPTOM</span>
-        <h3>瞄准粘滞 · 画面拖影</h3>
-        <p>鼠标点击到屏幕显示,整条链路延迟超标,反应永远慢半拍。</p>
-      </div>
-      <div class="card fade d4">
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v4.5L5.2 19a2 2 0 0 0 1.9 2.6h9.8a2 2 0 0 0 1.9-2.6L14 7.5V3"/><path d="M8.5 15h7"/></svg></div>
-        <span class="tag">ROOT CAUSE</span>
-        <h3>系统从未被认真调过</h3>
-        <p>大小核没安排、电源丢在平衡档、驱动参数全默认——问题不在硬件,在系统。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== 02 痛点叙述 ==================== -->
-<section id="story" style="padding-top:0">
-  <div class="story fade">
-    <p class="hl">你配了一台电脑,显卡给力,处理器也不弱,按参数看,玩游戏应该轻轻松松。
-    可实际一上手,帧数忽高忽低,延迟飘忽不定,鼠标拖拽起来像隔了层纱。</p>
-    <p>你怀疑是外设拖后腿,换过鼠标、换过屏幕,可那股不对劲的感觉始终没消失。</p>
-    <p><b>其实问题不在硬件。系统压根没被认真调过。</b></p>
-    <p>一台 Windows,调和不调,跑起来可能差出三分之一甚至更多的体验。各种全家桶软件蹲在后台偷跑,
-    系统自带的搜索、预加载功能也在暗中抢资源;处理器的大小核没被正确安排,电源模式丢在“平衡”档,
-    该冲的时候 CPU 根本冲不起来。</p>
-    <p>你掏的钱和实际感受到的流畅之间,差的可能就是一次专业的精调。</p>
-    <p class="glow">公子调试,把每一帧都磨成刀锋。</p>
-  </div>
-</section>
-
-<!-- ==================== 03 优势 ==================== -->
-<section id="edge">
-  <div class="container">
-    <div class="shead fade">
-      <div class="kicker">02 <span class="num-mark">—</span> 我们的优势 <b>EDGE</b></div>
-      <h2>不是教程能学到的方案,是上万台机器验证过的答案</h2>
-      <p>从系统底层到应用层,从进程调度到电源策略,从显卡驱动到大小核分配——全部重新调一遍。</p>
-    </div>
-    <div class="grid4">
-      <div class="card fade d1">
-        <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div>
-        <h3>系统级深度精调</h3>
-        <p>进程调度、电源策略、大小核绑定、注册表瘦身——每一项都是在大量实战机器上验证过的标准答案,不是拍脑袋定出来的。</p>
-      </div>
-      <div class="card fade d2">
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg></div>
-        <h3>延迟全链路压缩</h3>
-        <p>从鼠标点击到屏幕显示,整条链路压缩。瞄准更跟手,对枪无粘滞,关键时刻的反应快人一步。</p>
-      </div>
-      <div class="card fade d3">
-        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.4"/><path d="M12 2.8v3.4M12 17.8v3.4M2.8 12h3.4M17.8 12h3.4M5.5 5.5l2.4 2.4M16.1 16.1l2.4 2.4M18.5 5.5l-2.4 2.4M7.9 16.1l-2.4 2.4"/></svg></div>
-        <h3>驱动 · 画质双调优</h3>
-        <p>显卡驱动精细调试、DLSS 模型选型、ICC 滤镜配置——画质与帧率同时拉满,敌人更清晰,草和树不拖后腿。</p>
-      </div>
-      <div class="card fade d4">
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l2.1 4.9L19 9l-4.9 2.1L12 16l-2.1-4.9L5 9l4.9-1.1L12 3z"/><path d="M18 14.5l1.1 2.4 2.4 1.1-2.4 1.1L18 21.5l-1.1-2.4-2.4-1.1 2.4-1.1L18 14.5z"/></svg></div>
-        <h3>永久售后保障</h3>
-        <p>VIP 方案售后期间随时调试,一对一服务到底。承诺短一点没关系,说到就得做到。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== 04 效果 ==================== -->
-<section id="results">
-  <div class="container">
-    <div class="shead fade">
-      <div class="kicker">— 调试效果 <b>RESULTS</b></div>
-      <h2>真实数据,看得见的提升</h2>
-      <p>基于真实客户调试后的平均数据统计</p>
-    </div>
-    <div class="grid4">
-      <div class="card fade d1">
-        <span class="tag">FRAME RATE</span>
-        <div class="big-num up">+35~60%</div>
-        <ul class="effect-ul">
-          <li>平均帧率显著提升</li>
-          <li>Low 帧更稳定,不再掉帧</li>
-          <li>1% Low 帧提升明显</li>
+    <div class="scope-grid">
+      <div class="scope-col do fade d1">
+        <div class="scope-head">
+          <span class="pill">MY SCOPE</span>
+          <h3>直播调试 · 我的主场</h3>
+        </div>
+        <div class="scope-sub">围绕「播出去的那一路」的整套链路服务</div>
+        <ul class="scope-list do-list">
+          <li><span class="mk">✓</span><span><b>网络环境搭建</b><span class="sub">专线 / 节点选择,丢包抖动定位,双线路备份</span></span></li>
+          <li><span class="mk">✓</span><span><b>推流参数调优</b><span class="sub">OBS / 直播伴侣,码率 · 帧率 · 关键帧档位逐项校准</span></span></li>
+          <li><span class="mk">✓</span><span><b>编码与延迟调试</b><span class="sub">硬编 / 软编选型,画质与延迟的折中平衡</span></span></li>
+          <li><span class="mk">✓</span><span><b>画质与码率设置</b><span class="sub">在平台二次压缩规则内,最大化观众端清晰度</span></span></li>
+          <li><span class="mk">✓</span><span><b>音画同步校准</b><span class="sub">采集链路、A/V 偏移、底噪回声处理</span></span></li>
+          <li><span class="mk">✓</span><span><b>开播体检与直播日跟场</b><span class="sub">开播前全链路检查,直播中故障应急</span></span></li>
         </ul>
       </div>
-      <div class="card fade d2">
-        <span class="tag">IMAGE QUALITY</span>
-        <div class="big-num">脱胎换骨</div>
-        <ul class="effect-ul">
-          <li>画面更清晰,无噪点</li>
-          <li>远景不再模糊,细节更丰富</li>
-          <li>色彩更纯净,敌人更醒目</li>
+      <div class="scope-col dont fade d2">
+        <div class="scope-head">
+          <span class="pill">NOT MY SCOPE</span>
+          <h3>性能优化 · 不是我的服务</h3>
+        </div>
+        <div class="scope-sub">这些需求我接不了,但可以帮你指路</div>
+        <ul class="scope-list no-list">
+          <li><span class="mk">✕</span><span>游戏帧率提升 / FPS 调优</span></li>
+          <li><span class="mk">✕</span><span>CPU / GPU 超频、降压、跑分优化</span></li>
+          <li><span class="mk">✕</span><span>硬件选购、装机、清灰、更换散热</span></li>
+          <li><span class="mk">✕</span><span>系统重装、美化、Ghost 镜像</span></li>
+          <li><span class="mk">✕</span><span>鼠标键盘等外设调校</span></li>
         </ul>
+        <div class="scope-note"><b>一句话边界:</b>游戏卡顿、帧数低,那是「性能优化」的活儿;
+        断流、花屏、糊脸、声音对不上,才是我该出手的地方。拿不准的,先来问一句——
+        不该接的活,我会直接告诉你。</div>
       </div>
-      <div class="card fade d3">
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 02 服务清单与收费 ==================== -->
+<section id="services">
+  <div class="container">
+    <div class="shead fade">
+      <div class="kicker">02 <span class="num-mark">—</span> 服务清单 <b>SERVICES</b></div>
+      <h2>直播调试服务清单</h2>
+      <p>可以只做单点诊断,也可以整链路上门式调试。先诊断、后报价,不是直播链路的问题不硬接。</p>
+    </div>
+
+    <div class="grid3">
+      <div class="card svc fade d1">
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2M12 3.4c3 3 3 14.2 0 17.2M12 3.4c-3 3-3 14.2 0 17.2"/></svg></div>
+        <span class="tag">NETWORK</span>
+        <h3>网络环境搭建与弱网优化</h3>
+        <p>专线 / 节点选择、路由与 DNS 排查、丢包与抖动定位;户外、4G/5G 等弱网场景下的推流稳定性方案。</p>
+        <div class="fee">按次 · <b>¥88</b> 起</div>
+      </div>
+      <div class="card svc fade d2">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 7h9M18 7h2M4 17h4M13 17h7"/><circle cx="15.5" cy="7" r="2.2"/><circle cx="10.5" cy="17" r="2.2"/></svg></div>
+        <span class="tag">ENCODER</span>
+        <h3>推流参数调优</h3>
+        <p>OBS / 直播伴侣全套参数:分辨率、帧率、码率、关键帧间隔、编码档位,针对不同平台规则逐项校准。</p>
+        <div class="fee">按项 · <b>¥88</b> 起</div>
+      </div>
+      <div class="card svc fade d3">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="1.6"/><path d="M9.5 3v3.5M14.5 3v3.5M9.5 17.5V21M14.5 17.5V21M3 9.5h3.5M3 14.5h3.5M17.5 9.5H21M17.5 14.5H21"/></svg></div>
         <span class="tag">LATENCY</span>
-        <div class="big-num up">-30~50%</div>
-        <ul class="effect-ul">
-          <li>鼠标响应更快,无粘滞感</li>
-          <li>瞄准跟枪更丝滑</li>
-          <li>操作延迟明显降低</li>
-        </ul>
+        <h3>编码与延迟调试</h3>
+        <p>硬编 / 软编 / 双机方案选型,H.264·H.265 与延迟档位平衡,把「延迟」和「画质」调到你要的折中点。</p>
+        <div class="fee">按次 · <b>¥128</b> 起</div>
       </div>
-      <div class="card fade d4">
-        <span class="tag">SYSTEM</span>
-        <div class="big-num">全面升级</div>
-        <ul class="effect-ul">
-          <li>系统更流畅,开机更快</li>
-          <li>CPU / GPU 占用率优化</li>
-          <li>不再闪退、蓝屏、自动重启</li>
-        </ul>
+      <div class="card svc fade d1">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 12.5l9 5 9-5"/></svg></div>
+        <span class="tag">QUALITY</span>
+        <h3>画质与码率设置</h3>
+        <p>平台二次压缩规则内的开播策略:1080P / 2K 档位、色彩范围、锐化策略,让观众端「一眼更干净」。</p>
+        <div class="fee">按项 · <b>¥88</b> 起</div>
+      </div>
+      <div class="card svc fade d2">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3.5 12h2M8 8.5v7M12 5v14M16 9v6M19.5 11.5v1"/></svg></div>
+        <span class="tag">A/V SYNC</span>
+        <h3>音画同步与声音链路</h3>
+        <p>麦克风、声卡、采集卡全链路校准;音画偏移修正、底噪回声处理,让观众「看得清,也听得舒服」。</p>
+        <div class="fee">按次 · <b>¥128</b> 起</div>
+      </div>
+      <div class="card svc fade d3">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M10 3.5H7A1.5 1.5 0 0 0 5.5 5v13A1.5 1.5 0 0 0 7 19.5h10a1.5 1.5 0 0 0 1.5-1.5V5A1.5 1.5 0 0 0 17 3.5h-3"/><path d="M10 3.5a2 2 0 0 1 4 0"/><path d="M9 10.5l2.2 2.2L15 8.6"/></svg></div>
+        <span class="tag">PRE-CHECK</span>
+        <h3>开播前全链路体检</h3>
+        <p>模拟开播、抓日志、逐环节排查隐患,输出一份你的专属「开播前检查单」+ 故障应急预案。</p>
+        <div class="fee">单次 · <b>¥198</b></div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ==================== 05 方案 ==================== -->
-<section id="pricing">
-  <div class="container">
-    <div class="shead fade">
-      <div class="kicker">— 服务方案 <b>PRICING</b></div>
-      <h2>选择适合你的精调方案</h2>
-      <p>三档方案 · 价格透明 · 一对一服务</p>
-    </div>
+    <!-- 收费说明: 三档 -->
     <div class="price-grid">
-
       <div class="price-card fade d1">
-        <div class="p-name">基础性能调优</div>
-        <div class="p-sub">当前系统整体提升,立竿见影</div>
-        <div class="p-price"><small>¥</small>38</div>
-        <div class="p-time">预计耗时 20-40 min</div>
-        <p class="p-desc">在当前系统上做全面提升,让游戏体验立竿见影</p>
+        <div class="p-name">单次诊断</div>
+        <div class="p-sub">一个具体问题,一次远程定位</div>
+        <div class="p-price"><small>¥</small>88<span class="per">起</span></div>
+        <div class="p-time">远程 · 约 30-60 min</div>
+        <p class="p-desc">适合先试水,或已有明确的小问题:断流、花屏、延迟、音画,任选其一。</p>
         <ul class="p-list">
-          <li>系统优化设置</li>
-          <li>游戏画质调试</li>
-          <li>鼠标优化 · 注册表优化</li>
-          <li>电源设置精优</li>
-          <li class="hi">DLSS 模型优化</li>
-          <li class="hi">ICC 滤镜配置</li>
+          <li>单一问题定位(断流 / 花屏 / 延迟 / 音画)</li>
+          <li>远程抓日志 + 测链路,给出根因</li>
+          <li>可执行的修复与调参建议</li>
+          <li class="hi">当日小问题跟到好</li>
         </ul>
-        <p class="p-note-line">✓ 24 小时售后,当日问题免费处理</p>
-        <a href="#contact" class="btn btn-ghost" style="margin-top:16px">立即联系 →</a>
+        <p class="p-note-line">✓ 先诊断后报价,不满意不收费</p>
+        <a href="#booking" class="btn btn-ghost" style="margin-top:16px">预约单次诊断 →</a>
       </div>
 
       <div class="price-card featured fade d2">
-        <div class="flag">推荐 · 售后期 15 天</div>
-        <div class="p-name">全面优化</div>
-        <div class="p-sub">解决闪退 / Low 不稳 / 掉帧 + 延迟全链路压缩</div>
-        <div class="p-price"><small>¥</small>98</div>
-        <div class="p-time">预计耗时 60-90 min</div>
-        <p class="p-desc">帧率 + 画面 + 响应延迟,三位一体系统性提升</p>
+        <div class="flag">推荐 · 售后期 7 天</div>
+        <div class="p-name">全流程整调</div>
+        <div class="p-sub">整条链路从头调到尾,适合新号开播 / 换设备大调</div>
+        <div class="p-price"><small>¥</small>398<span class="per">起</span></div>
+        <div class="p-time">远程 · 按项目计,预计 2-4 h</div>
+        <p class="p-desc">网络 + 推流 + 编码 + 画质 + 音画,一次全部到位。</p>
         <ul class="p-list">
-          <li class="hi">解决闪退 / Low 不稳 / 掉帧</li>
-          <li>电竞专属系统重做 · 注册表深度优化</li>
-          <li>鼠标粘手感解决 · 瞄准丝滑优化</li>
-          <li>系统延迟优化 · 驱动精细优化</li>
-          <li>电源计划精调 · CPU 核心绑定</li>
-          <li>N 卡控制面板 · Windows 设置优化</li>
-          <li class="hi">DLSS 模型优化</li>
-          <li class="hi">ICC 滤镜配置</li>
+          <li class="hi">五大领域全链路调试</li>
+          <li>手游 / 端游(含双机采集)方案定制</li>
+          <li>开播前体检 + 专属检查单</li>
+          <li>首次直播日跟场(≤ 4h)</li>
+          <li>7 天售后答疑</li>
         </ul>
-        <p class="p-note-line">✓ 售后期间任何问题免费处理</p>
-        <a href="#contact" class="btn btn-primary" style="margin-top:16px">立即联系 →</a>
+        <p class="p-note-line">✓ 售后期内问题免费处理</p>
+        <a href="#booking" class="btn btn-primary" style="margin-top:16px">预约全流程整调 →</a>
       </div>
 
       <div class="price-card fade d3">
-        <div class="flag" style="background:var(--silver);">VIP · 永久售后</div>
-        <div class="p-name">超级优化 VIP 定制</div>
-        <div class="p-sub">一次投入,永久售后随时调试</div>
-        <div class="p-price"><small>¥</small>298</div>
-        <div class="p-time">顶级定制 · 一对一全程服务</div>
-        <p class="p-desc">彻底解决性能焦虑,长期专属技术支持</p>
+        <div class="flag alt">VIP · 月度陪跑</div>
+        <div class="p-name">长期陪跑</div>
+        <div class="p-sub">直播日有人兜底,平台改规则也不慌</div>
+        <div class="p-price"><small>¥</small>198<span class="per">/ 月</span></div>
+        <div class="p-time">远程 · 按月订阅,随时约</div>
+        <p class="p-desc">适合稳定开播、追求省心的主播与公会。</p>
         <ul class="p-list">
-          <li class="hi">帧率显著提升 · 画面脱胎换骨</li>
-          <li>系统延迟大幅降低 · 操作更精准</li>
-          <li>特调专属系统镜像部署</li>
-          <li>瓶颈精准定位 · 疑难杂症专项解决</li>
-          <li>系统美化:桌面布局与视觉定制</li>
-          <li>直播调试:OBS / 推流参数调优</li>
-          <li>故障排查:蓝屏 / 黑屏 / 掉驱动</li>
-          <li class="hi">永久售后 · 随时调试</li>
+          <li class="hi">每月 4 次预约调试额度</li>
+          <li>直播日在线值守,断流 / 故障优先响应</li>
+          <li>平台规则变更后的参数跟进</li>
+          <li>设备更换后的免费复调</li>
+          <li>公会 / 机构批量单另议</li>
         </ul>
-        <p class="p-note-line">✓ 售后期间任何问题免费处理</p>
-        <a href="#contact" class="btn btn-ghost" style="margin-top:16px">立即联系 →</a>
+        <p class="p-note-line">✓ 月度随时可停,不捆绑</p>
+        <a href="#booking" class="btn btn-ghost" style="margin-top:16px">了解陪跑方案 →</a>
       </div>
-
     </div>
 
     <div class="note-panel fade">
-      <b>重要提示:</b> 各方案均为远程精调服务,请保持驱动版本与系统设置不变。
-      <span>✓ 游戏赛季更新不会影响已完成的调优策略 &nbsp;✓ 售后期内可随时联系,响应及时</span>
-      <span>✓ 调试不满意可当天申请退款,并享免费重装正版系统;无需重装则恢复原设置(需收取少量人工成本费)。</span>
+      <b>收费说明:</b> 以上为示例报价结构,最终按机型、平台、复杂度一对一报价,先诊断后收费。
+      <span>✓ 所有服务均为远程调试,全程可控可监督 &nbsp;✓ 涉及平台规则与硬件上限的,先说明「能调到什么程度」再动手 &nbsp;✓ 不满意不收费,售后期内问题免费处理</span>
     </div>
   </div>
 </section>
 
-<!-- ==================== 06 联系 ==================== -->
-<section id="contact">
+<!-- ==================== 03 典型案例 ==================== -->
+<section id="cases">
   <div class="container">
-    <div class="cta-box fade">
-      <h2>别让硬件白等,现在就磨刀</h2>
-      <p>说清你的配置与痛点,1 对 1 沟通后给出方案;调试全程可监督,无提升当天退款。</p>
-      <div class="contact-chips">
-        <a class="chip" href="mailto:tune@obsgz.com">邮箱联系</a>
-        <a class="chip" href="#contact">微信 / 企业微信(二维码待接入)</a>
+    <div class="shead fade">
+      <div class="kicker">03 <span class="num-mark">—</span> 案例 <b>CASES</b></div>
+      <h2>典型调试案例</h2>
+      <p>均为直播链路问题,不含任何帧率 / 硬件优化内容。案例已脱敏,数据为演示占位。</p>
+    </div>
+    <div class="case-grid">
+      <div class="card case-card fade d1">
+        <span class="scene">手游直播 · 弱网环境</span>
+        <h3>户外 4G 开播,一场直播断流 6 次,画面全是马赛克</h3>
+        <div class="case-row"><span class="k">症状</span><p>户外手游直播,4G 网络下频繁花屏、马赛克,一场直播断流重连 6-7 次,粉丝流失严重。</p></div>
+        <div class="case-row"><span class="k">处理</span><p>重建推流链路:重选线路与编码参数,配置双线路热备,弱网兜底策略逐项验证。</p></div>
+        <div class="case-row"><span class="k">结果</span><p class="out">花屏明显减少,整场直播 0 断流,移动网络下稳定开播。</p></div>
+      </div>
+      <div class="card case-card fade d2">
+        <span class="scene">PC 端游直播 · 画质被压糊</span>
+        <h3>1080P 60 开播,观众一动起来画面就糊成一团</h3>
+        <div class="case-row"><span class="k">症状</span><p>端游直播,本地画面清晰,观众端高速运动场景糊、色块明显,被吐槽「看着像 720P」。</p></div>
+        <div class="case-row"><span class="k">处理</span><p>按平台二次压缩规则重校码率曲线与关键帧间隔,重设编码档位与画质策略。</p></div>
+        <div class="case-row"><span class="k">结果</span><p class="out">高速运动画面清晰度肉眼可辨提升,稳定吃到平台码率上限。</p></div>
+      </div>
+      <div class="card case-card fade d3">
+        <span class="scene">双机采集 · 音画不同步</span>
+        <h3>观众反馈「声音比画面慢半拍」,而且越播越明显</h3>
+        <div class="case-row"><span class="k">症状</span><p>双机直播,采集卡链路音画逐渐偏移,直播 1 小时后口型对不上,还有回声底噪。</p></div>
+        <div class="case-row"><span class="k">处理</span><p>检查采集链路与时基,校准 A/V 偏移与声卡采样率,逐段清理回声与底噪来源。</p></div>
+        <div class="case-row"><span class="k">结果</span><p class="out">音画误差稳定在 40ms 内,观众体感完全同步,声音干净。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 04 流程与工具 ==================== -->
+<section id="process">
+  <div class="container">
+    <div class="shead fade">
+      <div class="kicker">04 <span class="num-mark">—</span> 流程与工具 <b>PROCESS</b></div>
+      <h2>四步走完一次调试</h2>
+      <p>全程远程可控,你看着我做,每一步都会解释「为什么这么调」。</p>
+    </div>
+    <div class="steps-grid">
+      <div class="card step fade d1">
+        <div class="sno">01</div>
+        <h3>预约沟通</h3>
+        <p>说清平台、设备与症状,判断是否属于直播链路问题,确认收费与预期——不是我的活,直接告诉你。</p>
+      </div>
+      <div class="card step fade d2">
+        <div class="sno">02</div>
+        <h3>远程诊断</h3>
+        <p>抓推流日志、测网络链路、查编码参数,先定位根因,再给方案,不盲目乱调。</p>
+      </div>
+      <div class="card step fade d3">
+        <div class="sno">03</div>
+        <h3>实施调试</h3>
+        <p>在你远程可视的情况下调整并逐项验证,关键改动先备份原参数,随时可回退。</p>
+      </div>
+      <div class="card step fade d4">
+        <div class="sno">04</div>
+        <h3>验收陪跑</h3>
+        <p>直播日跟场确认效果,交付专属检查单;售后期内问题随时处理,不玩消失。</p>
+      </div>
+    </div>
+
+    <div class="tools-panel fade">
+      <div class="tgroup">
+        <span class="tname">推流与采集</span>
+        <div class="tchips">
+          <span class="tchip">OBS Studio</span>
+          <span class="tchip">直播伴侣</span>
+          <span class="tchip">vMix</span>
+          <span class="tchip">采集卡(HDMI 环出)</span>
+          <span class="tchip">NDI 双机方案</span>
+        </div>
+      </div>
+      <div class="tgroup">
+        <span class="tname">诊断与网络</span>
+        <div class="tchips">
+          <span class="tchip">推流日志分析</span>
+          <span class="tchip">丢包 / 抖动测试</span>
+          <span class="tchip">Wireshark 抓包</span>
+          <span class="tchip">线路与 DNS 排查</span>
+        </div>
+      </div>
+      <div class="tgroup">
+        <span class="tname">调试范围</span>
+        <div class="tchips">
+          <span class="tchip">iOS / Android 手游开播</span>
+          <span class="tchip">PC 端游直播</span>
+          <span class="tchip">单机直推</span>
+          <span class="tchip">双机采集</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 05 客户评价 ==================== -->
+<section id="reviews">
+  <div class="container">
+    <div class="shead fade">
+      <div class="kicker">05 <span class="num-mark">—</span> 客户评价 <b>REVIEWS</b></div>
+      <h2>主播们怎么说</h2>
+      <p>来自手游 / 端游主播与公会的反馈(演示占位,待替换为真实评价)。</p>
+    </div>
+    <div class="review-grid">
+      <div class="card review-card fade d1">
+        <div class="qmark">“</div>
+        <blockquote>之前一直以为是我网不行,查完才发现是推流参数和线路选错了。调完当天,整场直播一个观众都没看到花屏,断流也再没出现过。</blockquote>
+        <div class="review-meta">
+          <span class="avatar">凯</span>
+          <span class="who"><b>阿凯</b><span>手游主播 · 户外 + 室内双场景</span></span>
+          <span class="stars">★★★★★<em>演示占位</em></span>
+        </div>
+      </div>
+      <div class="card review-card fade d2">
+        <div class="qmark">“</div>
+        <blockquote>清晰度是真的一眼能看出来。同样的码率,调完之后观众说画面明显更干净,高速跑动也不糊了,弹幕都少了吐槽画质的。</blockquote>
+        <div class="review-meta">
+          <span class="avatar">诺</span>
+          <span class="who"><b>一诺</b><span>PC 端游主播 · FPS 品类</span></span>
+          <span class="stars">★★★★★<em>演示占位</em></span>
+        </div>
+      </div>
+      <div class="card review-card fade d3">
+        <div class="qmark">“</div>
+        <blockquote>最值的是直播日跟场。平台抽风、设备抽风的时候,有人能第一时间处理,不用自己一边开播一边瞎折腾,省心太多。</blockquote>
+        <div class="review-meta">
+          <span class="avatar">满</span>
+          <span class="who"><b>小满</b><span>公会运营负责人 · 管理 30+ 主播</span></span>
+          <span class="stars">★★★★★<em>演示占位</em></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 06 联系与预约 ==================== -->
+<section id="booking">
+  <div class="container">
+    <div class="shead fade">
+      <div class="kicker">06 <span class="num-mark">—</span> 联系与预约 <b>BOOKING</b></div>
+      <h2>预约一次直播调试</h2>
+      <p>说清你的平台、设备和症状,通常 30 分钟内回复。</p>
+    </div>
+    <div class="booking-grid">
+      <div class="book-panel fade d1">
+        <h3>联系公子调试</h3>
+        <p class="intro">预约前建议先发一句「平台 + 设备 + 症状」,能省掉一轮沟通。直播中出问题,直接注明「断流中」,优先处理。</p>
+        <div class="info-row">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M8.5 3.5H6a2 2 0 0 0-2 2v2.2A13.3 13.3 0 0 0 16.3 20h2.2a2 2 0 0 0 2-2v-2.5l-4-1.8-1.9 1.9a12 12 0 0 1-5.4-5.4l1.9-1.9-1.8-4z"/></svg></span>
+          <span class="tx"><b>微信</b><span>微信号待补充 · 二维码待接入(占位)</span></span>
+        </div>
+        <div class="info-row">
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg></span>
+          <span class="tx"><b>邮箱</b><span>contact@obsgz.com(占位)</span></span>
+        </div>
+        <div class="info-row">
+          <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 7v5l3.4 2"/></svg></span>
+          <span class="tx"><b>服务时间</b><span>工作日 10:00–22:00 · 直播日可加急</span></span>
+        </div>
+        <div class="tip-box"><b>先问一句不收费:</b>不确定自己是不是直播链路的问题?发症状过来,我先帮你判断该不该调、能调到什么程度,再决定要不要预约。</div>
+      </div>
+
+      <div class="book-panel fade d2">
+        <form id="bookingForm" novalidate>
+          <div class="field">
+            <label>怎么称呼你 <b>*</b></label>
+            <input type="text" id="bkName" placeholder="昵称 / 姓名" required>
+          </div>
+          <div class="field">
+            <label>你的身份</label>
+            <select id="bkRole">
+              <option value="手游主播">手游主播</option>
+              <option value="端游主播">端游主播</option>
+              <option value="公会 / MCN">公会 / MCN</option>
+              <option value="其他">其他</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>主要直播平台</label>
+            <select id="bkPlatform">
+              <option value="抖音">抖音</option>
+              <option value="快手">快手</option>
+              <option value="B站">B站</option>
+              <option value="斗鱼">斗鱼</option>
+              <option value="虎牙">虎牙</option>
+              <option value="视频号">视频号</option>
+              <option value="其他 / 多平台">其他 / 多平台</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>遇到的问题(可多选)</label>
+            <div class="opt-grid">
+              <input type="checkbox" id="p1" value="断流 / 花屏"><label for="p1">断流 / 花屏</label>
+              <input type="checkbox" id="p2" value="延迟高"><label for="p2">延迟高</label>
+              <input type="checkbox" id="p3" value="画质糊"><label for="p3">画质糊</label>
+              <input type="checkbox" id="p4" value="音画不同步"><label for="p4">音画不同步</label>
+              <input type="checkbox" id="p5" value="采集设备问题"><label for="p5">采集设备问题</label>
+              <input type="checkbox" id="p6" value="说不清 / 全身体检"><label for="p6">说不清 / 全身体检</label>
+            </div>
+          </div>
+          <div class="field">
+            <label>简单描述</label>
+            <textarea id="bkDesc" placeholder="例如:iOS 开播,户外 4G,一场要断 5、6 次,画面出马赛克…"></textarea>
+          </div>
+          <div class="field">
+            <label>联系方式(微信 / 手机号)<b> *</b></label>
+            <input type="text" id="bkContact" placeholder="预约必填,方便我联系你" required>
+          </div>
+          <div class="form-foot">
+            <button type="submit" class="btn btn-primary" id="bkSubmit">提交预约 →</button>
+            <span class="form-mode-note">提交即预约意向,正式报价以沟通为准</span>
+          </div>
+        </form>
+        <div class="form-ok" id="formOk">
+          <b>预约已收到(演示模式)。</b>正式上线前,这份表单只会停留在当前页面,不会真正发给公子调试——接入真实收集通道(如腾讯文档收集表)后自动生效。演示期间可直接通过页面上的微信 / 邮箱联系。
+        </div>
+        <div class="form-mode-note" style="margin-top:12px">FORM_MODE = demo(静态站演示态,提交不落库)</div>
       </div>
     </div>
   </div>
@@ -591,48 +890,38 @@ html:not(.js) .fade{opacity:1;transform:none}
 <footer class="footer">
   <div class="brand">
     <span class="brand-mark"><img src="logo.jpg" alt="公子调试"></span>
-    <span class="brand-name">公子调试<small>TUNE</small></span>
+    <span class="brand-name">公子调试<small>LIVE</small></span>
   </div>
-  <div class="footer-copy">© 2026 公子调试. 占位版权信息 · <a href="#top">返回顶部</a></div>
-  <div class="footer-copy" style="margin-top:6px"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">京ICP备00000000号(上线前替换)</a></div>
+  <div class="footer-copy">© 2026 公子调试 · 直播调试服务(手游 / 端游)&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#top">返回顶部</a></div>
+  <div class="footer-copy" style="margin-top:6px">专注直播链路调试:网络环境 · 推流参数 · 编码延迟 · 画质码率 · 音画同步 —— 不做帧率优化与装机</div>
 </footer>
 
 </div><!-- /.layer -->
 
 <script>
 /* ==========================================================================
-   刀光运镜 FX (Blade Cam)
-   实现: 全屏透明 Canvas, 三层内容
-     L1 静态银尘粒子(悬浮氛围)
-     L2 刀光事件: 一道斜掠光刃 + 刀尖火花, 周期性触发
-     L3 镜头扫光: 刀光同步的全屏斜向光带(运镜感), 'lighter' 混合低透明度
-   特性: 粒子/光效均为低透明度提亮(不遮字), pointer-events:none, 内容 z 轴更高
-   性能约束(硬性):
-     1) DPR 上限 1.75(桌面)/1.5(移动)
-     2) 粒子数按面积自适应, 上限 桌面90 / 移动28
-     3) 单循环 rAF + delta 时间步; 页面隐藏自动暂停
-     4) 禁用昂贵 shadowBlur 高频路径, 发光用径向渐变模拟
-     5) prefers-reduced-motion 或 ?fx=off 完全关闭
-     6) 低算力设备(hardwareConcurrency<=2)自动降档
+   刀光运镜 FX (Blade Cam) —— 性能约束见注释
+   L1 银尘粒子 / L2 斜掠光刃 + 刀尖火花 / L3 镜头扫光(运镜感,'lighter' 低透明)
+   关闭/降档: prefers-reduced-motion 或 ?fx=off 或 低算力设备(hardwareConcurrency<=2)
    ========================================================================== */
 (function(){
   'use strict';
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fxOff = /[?&]fx=off/.test(location.search);
   var lowEnd = (navigator.hardwareConcurrency || 8) <= 2;
-  if (reduced || fxOff || lowEnd) return;   // 关闭/降档直接跳过(连粒子都不开=零开销)
+  if (reduced || fxOff || lowEnd) return;
 
   var cv = document.getElementById('fx');
   var ctx = cv.getContext('2d');
-  if (!cv || !ctx) return;   // 不支持 canvas 则静默跳过, 不影响页面
+  if (!cv || !ctx) return;
   var W = 0, H = 0, DPR = 1;
   var mobile = window.matchMedia('(max-width:767px)').matches;
   var tab = window.matchMedia('(max-width:1023px)').matches && !mobile;
   var running = false, rafId = 0, last = 0;
 
   var MAX_P = mobile ? 28 : (tab ? 55 : 90);
-  var bladeEvery = mobile ? [11000, 21000] : [6500, 15000]; // 触发间隔(ms)
-  var bladeDur = 1900;      // 一次刀光运镜总时长 ms
+  var bladeEvery = mobile ? [11000, 21000] : [6500, 15000];
+  var bladeDur = 1900;
   var sparkN = mobile ? 16 : 34;
 
   function resize(){
@@ -643,14 +932,11 @@ html:not(.js) .fade{opacity:1;transform:none}
     seedParticles();
   }
 
-  /* ---------- L1 银尘粒子 ---------- */
   var parts = [];
   function seedParticles(){
     var want = Math.min(MAX_P, Math.round((W * H) / 26000));
     parts = parts.slice(0, want);
-    while (parts.length < want){
-      parts.push(newP());
-    }
+    while (parts.length < want){ parts.push(newP()); }
   }
   function newP(){
     return {
@@ -658,7 +944,7 @@ html:not(.js) .fade{opacity:1;transform:none}
       r: 0.4 + Math.random() * 1.3,
       vx: (Math.random() - .5) * .12,
       vy: (Math.random() - .5) * .12 - .03,
-      a: 0.03 + Math.random() * 0.10,      // 很低, 仅为氛围
+      a: 0.03 + Math.random() * 0.10,
       ph: Math.random() * Math.PI * 2,
       sp: 0.5 + Math.random() * 0.8
     };
@@ -676,18 +962,15 @@ html:not(.js) .fade{opacity:1;transform:none}
     ctx.globalAlpha = 1;
   }
 
-  /* ---------- L2+L3 刀光事件 ---------- */
-  var blades = [];          // 活跃刀光
+  var blades = [];
   function spawnBlade(){
-    // 随机入场边与倾斜角(运镜方向: 左下→右上 或 左上→右下 交替偏随机)
     var fromLeft = Math.random() < .5;
     var y0 = H * (0.25 + Math.random() * 0.5);
-    var angle = (Math.random() - .5) * 26 * Math.PI / 180; // 相对竖直线的倾角
-    var speed = (W + H) / (bladeDur * 0.55);               // px/ms
+    var angle = (Math.random() - .5) * 26 * Math.PI / 180;
+    var speed = (W + H) / (bladeDur * 0.55);
     var t = performance.now();
     blades.push({
-      x: fromLeft ? -200 : W + 200,
-      y: y0,
+      x: fromLeft ? -200 : W + 200, y: y0,
       dx: (fromLeft ? 1 : -1) * Math.cos(angle) * speed,
       dy: Math.sin(angle) * speed * (fromLeft ? 0.35 : -0.35),
       born: t, dur: bladeDur, life: 1, tipA: 1,
@@ -695,7 +978,6 @@ html:not(.js) .fade{opacity:1;transform:none}
     });
   }
   function sparks(bl, t){
-    // 刀尖喷薄火花(短命银粒)
     var n = mobile ? 5 : 9;
     for (var i = 0; i < n; i++){
       bl.sparks.push({
@@ -710,7 +992,6 @@ html:not(.js) .fade{opacity:1;transform:none}
   function drawBlade(bl){
     var t = performance.now();
     var k = (t - bl.born) / bl.dur;
-    // 光刃本体: 细长高亮 + 两侧衰减; 低透明度防止遮挡文字
     var grad = ctx.createLinearGradient(bl.x, bl.y, bl.x - bl.dx * 60, bl.y - bl.dy * 60);
     grad.addColorStop(0, 'rgba(255,255,255,.88)');
     grad.addColorStop(0.35, 'rgba(216,222,238,.32)');
@@ -724,14 +1005,12 @@ html:not(.js) .fade{opacity:1;transform:none}
     ctx.moveTo(bl.x - bl.dx * 46, bl.y - bl.dy * 46);
     ctx.lineTo(bl.x, bl.y);
     ctx.stroke();
-    // 刀光尾迹(拉长的金属扫掠)
     ctx.lineWidth = 1;
     ctx.globalAlpha = Math.max(0, (1 - k * 1.3)) * .5;
     ctx.beginPath();
     ctx.moveTo(bl.x - bl.dx * 180, bl.y - bl.dy * 180);
     ctx.lineTo(bl.x - bl.dx * 20, bl.y - bl.dy * 20);
     ctx.stroke();
-    // 刀尖光晕(径向渐变模拟 glow, 避免 shadowBlur)
     var g2 = ctx.createRadialGradient(bl.x, bl.y, 0, bl.x, bl.y, 46);
     g2.addColorStop(0, 'rgba(255,255,255,.30)');
     g2.addColorStop(1, 'rgba(255,255,255,0)');
@@ -739,7 +1018,6 @@ html:not(.js) .fade{opacity:1;transform:none}
     ctx.fillStyle = g2;
     ctx.beginPath(); ctx.arc(bl.x, bl.y, 46, 0, 6.2832); ctx.fill();
     ctx.globalAlpha = 1;
-    // 火花
     if (t - bl.sparkT > 55 && k < 0.78){ bl.sparkT = t; sparks(bl, t); }
     for (var i = bl.sparks.length - 1; i >= 0; i--){
       var s = bl.sparks[i];
@@ -753,9 +1031,7 @@ html:not(.js) .fade{opacity:1;transform:none}
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
 
-    /* L3 镜头扫光: 刀光所在直线扩展成整屏斜向光带,
-       制造"镜头被刀光带过"的运镜感。峰值透明度≤0.14, 不影响阅读 */
-    var sw = Math.max(0, 1 - Math.abs(k - 0.42) / 0.38); // 0.42 时刻最强
+    var sw = Math.max(0, 1 - Math.abs(k - 0.42) / 0.38);
     if (sw > 0.02){
       var sweepLen = Math.hypot(W, H) * 1.2;
       var thick = 150 + 260 * sw;
@@ -773,22 +1049,18 @@ html:not(.js) .fade{opacity:1;transform:none}
       ctx.restore();
       ctx.globalCompositeOperation = 'source-over';
     }
-    // 生命周期
-    if (k >= 1){
-      bl.dead = true;
-    }
+    if (k >= 1){ bl.dead = true; }
     bl.k = k;
   }
 
-  /* ---------- 主循环 ---------- */
-  var nextBladeAt = performance.now() + 2200; // 进场前先安静 ~2s
+  var nextBladeAt = performance.now() + 2200;
   function tick(now){
     if (!running) return;
     var dt = Math.min(now - last, 50) || 16; last = now;
     ctx.clearRect(0, 0, W, H);
     stepParts(dt);
     if (now >= nextBladeAt){
-      if (blades.length === 0){ spawnBlade(); }     // 同时只允许一道刀光
+      if (blades.length === 0){ spawnBlade(); }
       nextBladeAt = now + bladeEvery[0] + Math.random() * (bladeEvery[1] - bladeEvery[0]);
     }
     for (var i = blades.length - 1; i >= 0; i--){
@@ -832,8 +1104,45 @@ var io = new IntersectionObserver(function(es){
   });
 }, {threshold:0.12, rootMargin:'0px 0px -6% 0px'});
 document.querySelectorAll('.fade').forEach(function(el){ io.observe(el); });
-// hero 首屏元素直接显示(避免在无 JS 或不触发时空白)
 document.querySelectorAll('.hero .fade').forEach(function(el){ el.classList.add('in'); });
+
+/* ==================== 预约表单(演示态) ==================== */
+var FORM_MODE = 'demo';   // 'live' 时接真实收集通道(FORM_ENDPOINT)
+var FORM_ENDPOINT = '';   // 例如腾讯文档收集表 / Formspree 地址
+(function(){
+  var form = document.getElementById('bookingForm');
+  var ok = document.getElementById('formOk');
+  if (!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = (document.getElementById('bkName').value || '').trim();
+    var contact = (document.getElementById('bkContact').value || '').trim();
+    if (!name || !contact){
+      alert('请填写称呼与联系方式,方便我联系你。');
+      return;
+    }
+    var probs = [];
+    document.querySelectorAll('#bookingForm input[type=checkbox]:checked').forEach(function(c){ probs.push(c.value); });
+    var payload = {
+      name: name,
+      role: document.getElementById('bkRole').value,
+      platform: document.getElementById('bkPlatform').value,
+      problems: probs.join(' / ') || '未选择',
+      desc: (document.getElementById('bkDesc').value || '').trim(),
+      contact: contact,
+      ts: new Date().toISOString()
+    };
+    if (FORM_MODE === 'live' && FORM_ENDPOINT){
+      // TODO: 接入真实收集通道(腾讯文档收集表 / Formspree / 自有后端)
+      console.log('booking payload:', payload);
+    } else {
+      console.log('[demo] booking payload:', payload);
+    }
+    form.reset();
+    ok.classList.add('show');
+    ok.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+})();
 </script>
 
 </body>
