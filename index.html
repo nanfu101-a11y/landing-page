@@ -7,29 +7,9 @@
 <meta name="description" content="公子调试专注直播调试服务:网络环境搭建、推流参数调优、编码与延迟调试、画质与码率设置、音画同步校准,服务手游与端游直播从业者。不是帧率优化,不做装机,专注把「播出去的那一路」调稳定、调清晰、调低延迟。">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="icon" type="image/jpeg" sizes="32x32" href="favicon.jpg">
-<!--
-  ==========================================================================
-  公子调试 · 直播调试服务站(占位内容版)
-  视觉: 黑银主题 + 刀光运镜(延续品牌) | 单文件自包含,零外部依赖
-
-  定位差异(核心): 本站只做「直播调试」——
-    网络环境搭建 / 推流参数调优 / 编码与延迟调试 / 画质与码率设置 / 音画同步校准
-    明确不做: 游戏帧率优化 / 硬件超频 / 装机 / 系统美化(见 #scope 边界表)
-
-  板块对应:
-    #top       服务定位与价值主张(Hero + 速览)
-    #scope     定位边界:直播调试 vs 性能优化(帮客户理解专长边界)
-    #services  直播调试服务清单(6 项)+ 收费说明(3 档 + 收费规则)
-    #cases     典型调试案例(3 例,脱敏)
-    #process   工具与流程(4 步流程 + 工具清单)
-    #reviews   客户评价(3 条,占位)
-    #booking   联系方式 + 在线预约表单(演示态,FORM_MODE 可切 live)
-
-  响应式: >=1024 满配 / 768-1023 平板 2 列 / <768 单列+汉堡
-  特效性能约束: 同原刀光引擎(DPR 上限 / 粒子面积自适应 / reduced-motion 与 ?fx=off 关闭)
-  ==========================================================================
--->
+<!-- 页面由 cms/pagegen.py 根据 cms/content.json 自动生成; 直接改本文件会在下次保存时被覆盖 -->
 <style>
+
 /* ==================== 主题变量(黑银) ==================== */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -450,6 +430,7 @@ html:not(.js) .fade{opacity:1;transform:none}
   html{scroll-behavior:auto}
   *{animation:none!important;transition:none!important}
 }
+
 </style>
 </head>
 <body>
@@ -477,36 +458,29 @@ html:not(.js) .fade{opacity:1;transform:none}
   </div>
 </nav>
 
-<!-- ==================== Hero: 定位与价值主张 ==================== -->
 <header class="hero" id="top">
   <div class="hero-inner container">
     <div class="hero-badge fade in"><i></i>专注直播调试 · 服务手游 / 端游直播从业者</div>
     <h1 class="hero-title fade in d1">你的直播<br>只差一次专业调试</h1>
-    <p class="hero-sub fade in d2">我是公子调试,只做一件事:<b>直播调试</b>——网络环境搭建、推流参数调优、
-    编码与延迟调试、画质与码率设置、音画同步校准。
-    帮手游、端游主播把「播出去的那一路」调到<b>稳定、清晰、低延迟</b>。
-    <b>不做帧率优化,不做装机推荐</b>——开播出问题,就是我的主场。</p>
+    <p class="hero-sub fade in d2">我是公子调试,只做一件事:<b>直播调试</b>——网络环境搭建、推流参数调优、编码与延迟调试、画质与码率设置、音画同步校准。帮手游、端游主播把「播出去的那一路」调到<b>稳定、清晰、低延迟</b>。<b>不做帧率优化,不做装机推荐</b>——开播出问题,就是我的主场。</p>
     <div class="hero-cta fade in d3">
       <a href="#booking" class="btn btn-primary">预约直播调试</a>
       <a href="#services" class="btn btn-ghost">查看服务与收费</a>
     </div>
     <div class="hero-stats fade in d4">
-      <div class="hstat"><b><em>5</em>大领域</b><span>网络 / 推流 / 编码 / 画质 / 音画</span></div>
+      <div class="hstat"><b>5 大领域</b><span>网络 / 推流 / 编码 / 画质 / 音画</span></div>
       <div class="hstat"><b>不满意</b><span>不收费 · 先诊断后报价</span></div>
       <div class="hstat"><b>24h</b><span>直播日售后响应</span></div>
       <div class="hstat"><b>1对1</b><span>全程远程可控服务</span></div>
     </div>
   </div>
 </header>
-
-<!-- ==================== 01 定位边界 ==================== -->
 <section id="scope">
   <div class="container">
     <div class="shead fade">
       <div class="kicker">01 <span class="num-mark">—</span> 定位边界 <b>BOUNDARY</b></div>
       <h2>先划清边界:我调的是「直播」,不是「游戏」</h2>
-      <p>画面流畅度和直播质量,是两条完全不同的链路。很多主播分不清「电脑卡」和「直播糊」到底是谁的锅——
-      看懂下面这张表,你就知道什么时候该找我。</p>
+      <p>画面流畅度和直播质量,是两条完全不同的链路。很多主播分不清「电脑卡」和「直播糊」到底是谁的锅——看懂下面这张表,你就知道什么时候该找我。</p>
     </div>
     <div class="scope-grid">
       <div class="scope-col do fade d1">
@@ -516,12 +490,12 @@ html:not(.js) .fade{opacity:1;transform:none}
         </div>
         <div class="scope-sub">围绕「播出去的那一路」的整套链路服务</div>
         <ul class="scope-list do-list">
-          <li><span class="mk">✓</span><span><b>网络环境搭建</b><span class="sub">专线 / 节点选择,丢包抖动定位,双线路备份</span></span></li>
-          <li><span class="mk">✓</span><span><b>推流参数调优</b><span class="sub">OBS / 直播伴侣,码率 · 帧率 · 关键帧档位逐项校准</span></span></li>
-          <li><span class="mk">✓</span><span><b>编码与延迟调试</b><span class="sub">硬编 / 软编选型,画质与延迟的折中平衡</span></span></li>
-          <li><span class="mk">✓</span><span><b>画质与码率设置</b><span class="sub">在平台二次压缩规则内,最大化观众端清晰度</span></span></li>
-          <li><span class="mk">✓</span><span><b>音画同步校准</b><span class="sub">采集链路、A/V 偏移、底噪回声处理</span></span></li>
-          <li><span class="mk">✓</span><span><b>开播体检与直播日跟场</b><span class="sub">开播前全链路检查,直播中故障应急</span></span></li>
+<li><span class="mk">✓</span><span><b>网络环境搭建</b><span class="sub">专线 / 节点选择,丢包抖动定位,双线路备份</span></span></li>
+<li><span class="mk">✓</span><span><b>推流参数调优</b><span class="sub">OBS / 直播伴侣,码率 · 帧率 · 关键帧档位逐项校准</span></span></li>
+<li><span class="mk">✓</span><span><b>编码与延迟调试</b><span class="sub">硬编 / 软编选型,画质与延迟的折中平衡</span></span></li>
+<li><span class="mk">✓</span><span><b>画质与码率设置</b><span class="sub">在平台二次压缩规则内,最大化观众端清晰度</span></span></li>
+<li><span class="mk">✓</span><span><b>音画同步校准</b><span class="sub">采集链路、A/V 偏移、底噪回声处理</span></span></li>
+<li><span class="mk">✓</span><span><b>开播体检与直播日跟场</b><span class="sub">开播前全链路检查,直播中故障应急</span></span></li>
         </ul>
       </div>
       <div class="scope-col dont fade d2">
@@ -531,21 +505,17 @@ html:not(.js) .fade{opacity:1;transform:none}
         </div>
         <div class="scope-sub">这些需求我接不了,但可以帮你指路</div>
         <ul class="scope-list no-list">
-          <li><span class="mk">✕</span><span>游戏帧率提升 / FPS 调优</span></li>
-          <li><span class="mk">✕</span><span>CPU / GPU 超频、降压、跑分优化</span></li>
-          <li><span class="mk">✕</span><span>硬件选购、装机、清灰、更换散热</span></li>
-          <li><span class="mk">✕</span><span>系统重装、美化、Ghost 镜像</span></li>
-          <li><span class="mk">✕</span><span>鼠标键盘等外设调校</span></li>
+<li><span class="mk">✕</span><span>游戏帧率提升 / FPS 调优</span></li>
+<li><span class="mk">✕</span><span>CPU / GPU 超频、降压、跑分优化</span></li>
+<li><span class="mk">✕</span><span>硬件选购、装机、清灰、更换散热</span></li>
+<li><span class="mk">✕</span><span>系统重装、美化、Ghost 镜像</span></li>
+<li><span class="mk">✕</span><span>鼠标键盘等外设调校</span></li>
         </ul>
-        <div class="scope-note"><b>一句话边界:</b>游戏卡顿、帧数低,那是「性能优化」的活儿;
-        断流、花屏、糊脸、声音对不上,才是我该出手的地方。拿不准的,先来问一句——
-        不该接的活,我会直接告诉你。</div>
+        <div class="scope-note"><b>一句话边界:</b>游戏卡顿、帧数低,那是「性能优化」的活儿;断流、花屏、糊脸、声音对不上,才是我该出手的地方。拿不准的,先来问一句——不该接的活,我会直接告诉你。</div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- ==================== 02 服务清单与收费 ==================== -->
 <section id="services">
   <div class="container">
     <div class="shead fade">
@@ -553,53 +523,50 @@ html:not(.js) .fade{opacity:1;transform:none}
       <h2>直播调试服务清单</h2>
       <p>可以只做单点诊断,也可以整链路上门式调试。先诊断、后报价,不是直播链路的问题不硬接。</p>
     </div>
-
     <div class="grid3">
       <div class="card svc fade d1">
         <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2M12 3.4c3 3 3 14.2 0 17.2M12 3.4c-3 3-3 14.2 0 17.2"/></svg></div>
         <span class="tag">NETWORK</span>
         <h3>网络环境搭建与弱网优化</h3>
         <p>专线 / 节点选择、路由与 DNS 排查、丢包与抖动定位;户外、4G/5G 等弱网场景下的推流稳定性方案。</p>
-        <div class="fee">按次 · <b>¥88</b> 起</div>
+        <div class="fee">按次 ·<b>¥88</b>起</div>
       </div>
       <div class="card svc fade d2">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 7h9M18 7h2M4 17h4M13 17h7"/><circle cx="15.5" cy="7" r="2.2"/><circle cx="10.5" cy="17" r="2.2"/></svg></div>
         <span class="tag">ENCODER</span>
         <h3>推流参数调优</h3>
         <p>OBS / 直播伴侣全套参数:分辨率、帧率、码率、关键帧间隔、编码档位,针对不同平台规则逐项校准。</p>
-        <div class="fee">按项 · <b>¥88</b> 起</div>
+        <div class="fee">按项 ·<b>¥88</b>起</div>
       </div>
       <div class="card svc fade d3">
         <div class="icon"><svg viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="1.6"/><path d="M9.5 3v3.5M14.5 3v3.5M9.5 17.5V21M14.5 17.5V21M3 9.5h3.5M3 14.5h3.5M17.5 9.5H21M17.5 14.5H21"/></svg></div>
         <span class="tag">LATENCY</span>
         <h3>编码与延迟调试</h3>
         <p>硬编 / 软编 / 双机方案选型,H.264·H.265 与延迟档位平衡,把「延迟」和「画质」调到你要的折中点。</p>
-        <div class="fee">按次 · <b>¥128</b> 起</div>
+        <div class="fee">按次 ·<b>¥128</b>起</div>
       </div>
       <div class="card svc fade d1">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 12.5l9 5 9-5"/></svg></div>
         <span class="tag">QUALITY</span>
         <h3>画质与码率设置</h3>
         <p>平台二次压缩规则内的开播策略:1080P / 2K 档位、色彩范围、锐化策略,让观众端「一眼更干净」。</p>
-        <div class="fee">按项 · <b>¥88</b> 起</div>
+        <div class="fee">按项 ·<b>¥88</b>起</div>
       </div>
       <div class="card svc fade d2">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M3.5 12h2M8 8.5v7M12 5v14M16 9v6M19.5 11.5v1"/></svg></div>
         <span class="tag">A/V SYNC</span>
         <h3>音画同步与声音链路</h3>
         <p>麦克风、声卡、采集卡全链路校准;音画偏移修正、底噪回声处理,让观众「看得清,也听得舒服」。</p>
-        <div class="fee">按次 · <b>¥128</b> 起</div>
+        <div class="fee">按次 ·<b>¥128</b>起</div>
       </div>
       <div class="card svc fade d3">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M10 3.5H7A1.5 1.5 0 0 0 5.5 5v13A1.5 1.5 0 0 0 7 19.5h10a1.5 1.5 0 0 0 1.5-1.5V5A1.5 1.5 0 0 0 17 3.5h-3"/><path d="M10 3.5a2 2 0 0 1 4 0"/><path d="M9 10.5l2.2 2.2L15 8.6"/></svg></div>
         <span class="tag">PRE-CHECK</span>
         <h3>开播前全链路体检</h3>
         <p>模拟开播、抓日志、逐环节排查隐患,输出一份你的专属「开播前检查单」+ 故障应急预案。</p>
-        <div class="fee">单次 · <b>¥198</b></div>
+        <div class="fee">单次 ·<b>¥198</b></div>
       </div>
     </div>
-
-    <!-- 收费说明: 三档 -->
     <div class="price-grid">
       <div class="price-card fade d1">
         <div class="p-name">单次诊断</div>
@@ -608,15 +575,14 @@ html:not(.js) .fade{opacity:1;transform:none}
         <div class="p-time">远程 · 约 30-60 min</div>
         <p class="p-desc">适合先试水,或已有明确的小问题:断流、花屏、延迟、音画,任选其一。</p>
         <ul class="p-list">
-          <li>单一问题定位(断流 / 花屏 / 延迟 / 音画)</li>
-          <li>远程抓日志 + 测链路,给出根因</li>
-          <li>可执行的修复与调参建议</li>
+          <li class="">单一问题定位(断流 / 花屏 / 延迟 / 音画)</li>
+          <li class="">远程抓日志 + 测链路,给出根因</li>
+          <li class="">可执行的修复与调参建议</li>
           <li class="hi">当日小问题跟到好</li>
         </ul>
         <p class="p-note-line">✓ 先诊断后报价,不满意不收费</p>
         <a href="#booking" class="btn btn-ghost" style="margin-top:16px">预约单次诊断 →</a>
       </div>
-
       <div class="price-card featured fade d2">
         <div class="flag">推荐 · 售后期 7 天</div>
         <div class="p-name">全流程整调</div>
@@ -626,15 +592,14 @@ html:not(.js) .fade{opacity:1;transform:none}
         <p class="p-desc">网络 + 推流 + 编码 + 画质 + 音画,一次全部到位。</p>
         <ul class="p-list">
           <li class="hi">五大领域全链路调试</li>
-          <li>手游 / 端游(含双机采集)方案定制</li>
-          <li>开播前体检 + 专属检查单</li>
-          <li>首次直播日跟场(≤ 4h)</li>
-          <li>7 天售后答疑</li>
+          <li class="">手游 / 端游(含双机采集)方案定制</li>
+          <li class="">开播前体检 + 专属检查单</li>
+          <li class="">首次直播日跟场(≤ 4h)</li>
+          <li class="">7 天售后答疑</li>
         </ul>
         <p class="p-note-line">✓ 售后期内问题免费处理</p>
         <a href="#booking" class="btn btn-primary" style="margin-top:16px">预约全流程整调 →</a>
       </div>
-
       <div class="price-card fade d3">
         <div class="flag alt">VIP · 月度陪跑</div>
         <div class="p-name">长期陪跑</div>
@@ -644,24 +609,23 @@ html:not(.js) .fade{opacity:1;transform:none}
         <p class="p-desc">适合稳定开播、追求省心的主播与公会。</p>
         <ul class="p-list">
           <li class="hi">每月 4 次预约调试额度</li>
-          <li>直播日在线值守,断流 / 故障优先响应</li>
-          <li>平台规则变更后的参数跟进</li>
-          <li>设备更换后的免费复调</li>
-          <li>公会 / 机构批量单另议</li>
+          <li class="">直播日在线值守,断流 / 故障优先响应</li>
+          <li class="">平台规则变更后的参数跟进</li>
+          <li class="">设备更换后的免费复调</li>
+          <li class="">公会 / 机构批量单另议</li>
         </ul>
         <p class="p-note-line">✓ 月度随时可停,不捆绑</p>
         <a href="#booking" class="btn btn-ghost" style="margin-top:16px">了解陪跑方案 →</a>
       </div>
     </div>
-
     <div class="note-panel fade">
       <b>收费说明:</b> 以上为示例报价结构,最终按机型、平台、复杂度一对一报价,先诊断后收费。
-      <span>✓ 所有服务均为远程调试,全程可控可监督 &nbsp;✓ 涉及平台规则与硬件上限的,先说明「能调到什么程度」再动手 &nbsp;✓ 不满意不收费,售后期内问题免费处理</span>
+<span>✓ 所有服务均为远程调试,全程可控可监督</span>
+<span>✓ 涉及平台规则与硬件上限的,先说明「能调到什么程度」再动手</span>
+<span>✓ 不满意不收费,售后期内问题免费处理</span>
     </div>
   </div>
 </section>
-
-<!-- ==================== 03 典型案例 ==================== -->
 <section id="cases">
   <div class="container">
     <div class="shead fade">
@@ -694,8 +658,6 @@ html:not(.js) .fade{opacity:1;transform:none}
     </div>
   </div>
 </section>
-
-<!-- ==================== 04 流程与工具 ==================== -->
 <section id="process">
   <div class="container">
     <div class="shead fade">
@@ -725,7 +687,6 @@ html:not(.js) .fade{opacity:1;transform:none}
         <p>直播日跟场确认效果,交付专属检查单;售后期内问题随时处理,不玩消失。</p>
       </div>
     </div>
-
     <div class="tools-panel fade">
       <div class="tgroup">
         <span class="tname">推流与采集</span>
@@ -758,8 +719,6 @@ html:not(.js) .fade{opacity:1;transform:none}
     </div>
   </div>
 </section>
-
-<!-- ==================== 05 客户评价 ==================== -->
 <section id="reviews">
   <div class="container">
     <div class="shead fade">
@@ -798,8 +757,6 @@ html:not(.js) .fade{opacity:1;transform:none}
     </div>
   </div>
 </section>
-
-<!-- ==================== 06 联系与预约 ==================== -->
 <section id="booking">
   <div class="container">
     <div class="shead fade">
@@ -856,12 +813,12 @@ html:not(.js) .fade{opacity:1;transform:none}
           <div class="field">
             <label>遇到的问题(可多选)</label>
             <div class="opt-grid">
-              <input type="checkbox" id="p1" value="断流 / 花屏"><label for="p1">断流 / 花屏</label>
-              <input type="checkbox" id="p2" value="延迟高"><label for="p2">延迟高</label>
-              <input type="checkbox" id="p3" value="画质糊"><label for="p3">画质糊</label>
-              <input type="checkbox" id="p4" value="音画不同步"><label for="p4">音画不同步</label>
-              <input type="checkbox" id="p5" value="采集设备问题"><label for="p5">采集设备问题</label>
-              <input type="checkbox" id="p6" value="说不清 / 全身体检"><label for="p6">说不清 / 全身体检</label>
+              <input type="checkbox" id="prob1" value="断流 / 花屏"><label for="prob1">断流 / 花屏</label>
+              <input type="checkbox" id="prob2" value="延迟高"><label for="prob2">延迟高</label>
+              <input type="checkbox" id="prob3" value="画质糊"><label for="prob3">画质糊</label>
+              <input type="checkbox" id="prob4" value="音画不同步"><label for="prob4">音画不同步</label>
+              <input type="checkbox" id="prob5" value="采集设备问题"><label for="prob5">采集设备问题</label>
+              <input type="checkbox" id="prob6" value="说不清 / 全身体检"><label for="prob6">说不清 / 全身体检</label>
             </div>
           </div>
           <div class="field">
@@ -878,7 +835,7 @@ html:not(.js) .fade{opacity:1;transform:none}
           </div>
         </form>
         <div class="form-ok" id="formOk">
-          <b>预约已收到(演示模式)。</b>正式上线前,这份表单只会停留在当前页面,不会真正发给公子调试——接入真实收集通道(如腾讯文档收集表)后自动生效。演示期间可直接通过页面上的微信 / 邮箱联系。
+          <b>预约已收到(演示模式)。</b>正式上线前,这份表单只会停留在当前页面,不会真正发出——接入真实收集通道后自动生效。演示期间可直接通过页面上的微信 / 邮箱联系。
         </div>
         <div class="form-mode-note" style="margin-top:12px">FORM_MODE = demo(静态站演示态,提交不落库)</div>
       </div>
@@ -886,7 +843,6 @@ html:not(.js) .fade{opacity:1;transform:none}
   </div>
 </section>
 
-<!-- ==================== 页脚 ==================== -->
 <footer class="footer">
   <div class="brand">
     <span class="brand-mark"><img src="logo.jpg" alt="公子调试"></span>
@@ -899,6 +855,7 @@ html:not(.js) .fade{opacity:1;transform:none}
 </div><!-- /.layer -->
 
 <script>
+
 /* ==========================================================================
    刀光运镜 FX (Blade Cam) —— 性能约束见注释
    L1 银尘粒子 / L2 斜掠光刃 + 刀尖火花 / L3 镜头扫光(运镜感,'lighter' 低透明)
@@ -1079,9 +1036,10 @@ html:not(.js) .fade{opacity:1;transform:none}
   resize();
   start();
 })();
-</script>
 
+</script>
 <script>
+
 /* ==================== 页面交互 ==================== */
 // 导航滚动毛玻璃增强
 window.addEventListener('scroll', function(){
@@ -1143,6 +1101,7 @@ var FORM_ENDPOINT = '';   // 例如腾讯文档收集表 / Formspree 地址
     ok.scrollIntoView({behavior:'smooth', block:'nearest'});
   });
 })();
+
 </script>
 
 </body>
